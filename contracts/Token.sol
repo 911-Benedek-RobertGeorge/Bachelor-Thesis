@@ -29,43 +29,47 @@ contract WorkShareToken is IERC20 {
 
     mapping (address => uint) public balances;
     mapping (address => mapping(address => uint)) allowed;
-
     //  0x111... (owner) allows 0x222... (the spender) --- 100 tokens;
     // allowed[0x111...][0x222...] = 100;
+
     constructor()  {
         supply = 0;
         founder = payable(msg.sender);
-        balances[founder] = supply;
-        priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
+        priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e); // GOERLI NETWORK
     }
 
- function getLatestPrice() public view returns (uint) {
-    (,int price,,,) = priceFeed.latestRoundData();
-    return uint(price);
-  }
+    function getLatestPrice() public view returns (uint) {
+        (,int price,,,) = priceFeed.latestRoundData();
+        return uint(price);
+    }
 
-  function getPriceETH(uint _ethAmount) public view returns (uint){
-    return uint( (getLatestPrice() * _ethAmount ) / 1e18);
-  }
+    function getPriceETH(uint _ethAmount) public view returns (uint){
+        return uint( (getLatestPrice() * _ethAmount ) / 1e18);
+    }
+
     function balanceOf(address   tokenOwner) public view override returns (uint balance){
         return balances[tokenOwner];
     }
+
      function decimals() public view virtual returns (uint8){
          return 10;
 
      }
+
     function symbol() public view virtual returns (string memory) {
         return "WST";
     }
+
     function name() public view virtual returns (string memory) {
         return "WorkShareToken";
     }
+
     function totalSupply() public view virtual override returns (uint256) {
             return supply;
-        }
+    }
+
     function transfer(address   to, uint   tokens) public virtual override returns (bool success){
         require(balances[msg.sender] >= tokens);
-
         balances[to] += tokens;
         balances[msg.sender] -= tokens;
 
@@ -82,10 +86,10 @@ contract WorkShareToken is IERC20 {
     function approve(address spender, uint   tokens) public override returns (bool success){
         require(balances[msg.sender] >= tokens);
         require(tokens > 0);
-
         allowed[msg.sender][spender] = tokens;
 
         emit Approval(msg.sender, spender, tokens);
+
         return true;      
     }
 
@@ -93,31 +97,33 @@ contract WorkShareToken is IERC20 {
     function transferFrom(address   from, address   to, uint  tokens) public virtual override returns (bool success){
 
         require(allowed[from][to] >= tokens, "You cant take the tokens form another wallet if not allowed.");
-        require(balances[from] >= tokens, "Not enough balance");
+        require(balances[from] >= tokens, "Not enough balance!");
         balances[from] -= tokens;
         balances[to] += tokens;
         allowed[from][to] -= tokens;
+
         emit Transfer(from, to, tokens);
+        
         return true;
     }
 
     event Mint(address   investor, uint   value, uint  tokens);
 
     function mint() payable public returns(bool){
-        
+
       uint tokens = msg.value / tokenPrice;
       supply += tokens;
       balances[msg.sender] += tokens;
-
-      //founder.transfer(value);
 
       emit Mint(msg.sender, msg.value, tokens);
 
       return true;
     }
+
     //withdraw the tokens you have in eth 
     function withdraw(uint tokens) public returns (bool){
-        require (balances[msg.sender] >= tokens, "Not enough balance");
+        require (balances[msg.sender] >= tokens, "Not enough balance!");
+
         uint value = tokens * tokenPrice ;
         supply -= tokens;
         balances[msg.sender] -= tokens;
@@ -125,6 +131,7 @@ contract WorkShareToken is IERC20 {
 
         return true;
     }
+    
     receive() payable external{
         mint();
     }

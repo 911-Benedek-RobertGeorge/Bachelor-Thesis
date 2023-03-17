@@ -3,6 +3,9 @@
     "hardhat": "^2.13.0"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.6.1"
+    "@alch/alchemy-web3": "^1.4.7",
+    "@chainlink/contracts": "^0.6.1",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "dotenv": "^16.0.3"
   }
 }

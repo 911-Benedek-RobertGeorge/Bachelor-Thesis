@@ -1,0 +1,5 @@
+
+//Run one of the scripts files
+npx hardhat run scripts/deploy_NFT.js --network goerli  
+
+

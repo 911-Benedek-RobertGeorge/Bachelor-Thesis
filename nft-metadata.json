@@ -1,0 +1,28 @@
+{
+	"name": "Project Manager",
+	"description": "Proven project manager with strong communication, leadership, and problem-solving skills. Experienced in managing complex projects, building relationships, and delivering results on time and within budget",
+	"image": "ipfs://QmPhyF4PMXHK1rewuLASFwcoanfUrPKAo7xs6bdyqhmxSj",
+
+	"attributes": [
+		{
+			"trait_type": "Attention to detail",
+			"value": "Meticulous"
+		},
+		{
+			"trait_type": "Problem-solving skills",
+			"value": "Analytical"
+		},
+		{
+			"trait_type": "Continuous learning",
+			"value": "Adaptive"
+		},
+		{
+			"trait_type": "Team player",
+			"value": "Collaborative"
+		},
+		{
+			"trait_type": "Creativity",
+			"value": "Innovative"
+		}
+	]
+}
