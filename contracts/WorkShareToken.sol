@@ -120,6 +120,18 @@ contract WorkShareToken is IERC20 {
       return true;
     }
 
+    
+    function mintFromContract(address sender, uint value) public returns(bool){
+      
+      uint tokens = value / tokenPrice;
+      supply += tokens;
+      balances[sender] += tokens;
+
+      emit Mint(sender, value, tokens);
+
+      return true;
+    }
+    
     //withdraw the tokens you have in eth 
     function withdraw(uint tokens) public returns (bool){
         require (balances[msg.sender] >= tokens, "Not enough balance!");
