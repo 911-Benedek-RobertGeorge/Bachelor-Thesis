@@ -34,7 +34,7 @@ contract WorkShare is Initializable, Ownable{
     }
 
     struct Project{
-        address manager;
+        address manager; //TODO MAYBE CHANGE THIS TO PAYABLE
         string shortDescription;
         string requirementsDocumentCID; // IPFS pinata CID
         uint64 reward; // the number of workShareTokens for completing the task
@@ -45,7 +45,7 @@ contract WorkShare is Initializable, Ownable{
         address payable acceptedDeveloper; 
     }
 
-    function getAllApplicants(uint32 projectNumber) public view returns (address[] memory){
+    function getAllApplicants(uint32 projectNumber) public view onlyAdmin returns (address[] memory){
         uint32 nrOfApplicants = projects[projectNumber].nrOfApplicants;
         address[] memory applicants = new address[](nrOfApplicants);
         for (uint32 i = 0; i < nrOfApplicants; ++i) { // ++i for less gas consumption (5 gas per iteration )
@@ -60,30 +60,49 @@ contract WorkShare is Initializable, Ownable{
     }
     
     //should  the person to apply necceserily or the admin can name it even if not from applications ? 
-    function acceptApplication(uint32 _nrOfProject, address _applicant) public {
+    function acceptApplication(uint32 _nrOfProject, address _applicant) public onlyAdmin {
         require(msg.sender == projects[_nrOfProject].manager,"You can only accept applicants for your own project.");
         projects[_nrOfProject].acceptedDeveloper = payable(_applicant);
     }
 
+    //Allow developers to apply for a project
     function applyForProject(uint32 _projectNumber) public {
         string memory email = developers[msg.sender];
-        require( bytes(email).length == 0, "You have to be registered first");
+        require(bytes(email).length == 0, "You have to be registered first");
         uint32 nrOfApplicants = projects[_projectNumber].nrOfApplicants ++; 
-        projects[_projectNumber].applications[nrOfApplicants] = msg.sender;
+        projects[_projectNumber].applications[nrOfApplicants] = msg.sender;  ///indexed from 0 
     }
 
-    function finalizeProject(uint32 _projectNumber) public { //onlyAdmin{   the manager is for sure an admin so ne need to verify this
-        require(msg.sender == projects[_projectNumber].manager,"You can only finalize your own project.");
-
+    //When the project is approved by the manager, giving the reward to the developer
+    function finalizeProject(uint32 _projectNumber) public onlyAdmin{   
+        require(msg.sender == projects[_projectNumber].manager,"You can only finalize your own projects.");
         Project storage project = projects[_projectNumber]; // get a refference to the project
         uint finalReward = project.reward;
-        if(project.deadline > block.timestamp)
+        if(project.deadline < block.timestamp)
         {
             finalReward -= project.penalty;
-            require(workShareToken.transfer(msg.sender,project.penalty),"The transfer of penalty tokens failed."); // send back the penalty tokens to the project manager
+            // send back the penalty tokens to the project manager
+            require(workShareToken.transfer(msg.sender,project.penalty),"The transfer of penalty tokens failed."); 
         }
         require(workShareToken.transfer(project.acceptedDeveloper, finalReward),"The transfer of the reward failed");
          
+    }
+
+    //When a project has not been completed, if the manager agrees that the developer has been implicated he will get 20% of reward, 
+    // otherwise the developer does not get anything
+    function projectNotCompleted(uint32 _projectNumber, bool _effort) public onlyAdmin{   
+        require(msg.sender == projects[_projectNumber].manager,"You can only finalize your own projects.");
+        Project storage project = projects[_projectNumber]; // get a refference to the project
+        require(project.deadline > block.timestamp , "The deadline has not passed. Give it some time");
+        uint finalReward = 0;
+        if(_effort == true)
+        {
+            // the developer will only get 20% reward for the effort
+            finalReward = uint(project.reward / 5);
+            require(workShareToken.transfer(project.acceptedDeveloper, finalReward),"The transfer of the reward failed");
+        }
+         // send back the tokens to the project manager
+        require(workShareToken.transfer(msg.sender,project.reward - finalReward),"Transfering back the tokens of the not completed project failed.");
     }
 
     function initialize(address payable _token) public initializer{
@@ -91,6 +110,7 @@ contract WorkShare is Initializable, Ownable{
         admins[msg.sender] = true;
     }
     
+    //Create a project 
     event CreateProjectEvent(uint32 nrOfProjects,string _requirementsDocumentCID,uint64 _reward, uint64 _penalty, uint64 _deadline);
     function createProject(string memory _requirementsDocumentCID,uint64 _reward, uint64 _penalty, uint64 _deadline) public onlyAdmin
     {
@@ -120,6 +140,11 @@ contract WorkShare is Initializable, Ownable{
 
     function revokeAdminRole(address _remove) public onlyOwner{
         admins[_remove] = false;
+    }
+
+    function changeManagerOfProject(uint32 _projectNumber, address _newManager) public onlyOwner {
+        require(admins[_newManager], "The address must be an admin first.");  
+        projects[_projectNumber].manager = _newManager;
     }
     
 } 
