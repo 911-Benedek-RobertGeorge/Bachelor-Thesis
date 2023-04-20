@@ -3,7 +3,7 @@
 :root {
 	--font-family: "Manrope", sans-serif;
 
-	--gradient-text: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
+	--gradient-text: linear-gradient(89deg, rgba(55, 134, 167, 1) 0%, rgba(1, 227, 192, 1) 50%, rgba(81, 213, 146, 1) 100%);
 	--gradient-bar: linear-gradient(103.22deg, #ae67fa -13.86%, #f49867 99.55%);
 
 	--color-bg: #040c18;
@@ -12,3 +12,6 @@
 	--color-text: #81afdd;
 	--color-subtext: #ff8a71;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
