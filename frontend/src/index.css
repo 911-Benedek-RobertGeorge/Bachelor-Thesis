@@ -4,14 +4,28 @@
 	--font-family: "Manrope", sans-serif;
 
 	--gradient-text: linear-gradient(89deg, rgba(55, 134, 167, 1) 0%, rgba(1, 227, 192, 1) 50%, rgba(81, 213, 146, 1) 100%);
-	--gradient-bar: linear-gradient(103.22deg, #ae67fa -13.86%, #f49867 99.55%);
-
+	--gradient-bar: linear-gradient(103.22deg, #8925b1 -13.86%, #2687c6 99.55%);
+	--register-gradient: linear-gradient(135deg, #833cd2 18%, #29d6a2 46%, #833cd2 67%);
 	--color-bg: #040c18;
+	--color-logo: #8925b1;
 	--color-footer: #031b34;
 	--color-blog: #042c54;
 	--color-text: #81afdd;
 	--color-subtext: #ff8a71;
+
+	--card-height: 65vh;
+	--card-width: calc(var(--card-height) / 1.5);
 }
+.text-gradient {
+	/** TEXT GRADIENT */
+	color: #833cd2;
+	background-image: -webkit-radial-gradient(circle, #833cd2 18%, #29d6a2 46%, #833cd2 67%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
