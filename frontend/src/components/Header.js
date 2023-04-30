@@ -11,8 +11,8 @@ export const Header = () => {
 		setActive(!active);
 	};
 	return (
-		<div className="fixed w-full p-2 text-color-logo flex justify-between mt-[-3%] items-center ">
-			<div className="flex flex-col items-center  md:scale-75  sm:scale-50 text-center text-white font-extrabold">
+		<div className="select-none flex w-full p-2 text-color-logo   justify-between mt-[-3%] items-center ">
+			<div className="select-none flex flex-col items-center  md:scale-50  sm:scale-50 text-center text-white font-extrabold">
 				<img src={logo} alt="logo" className="" />
 				<h1 className="md:text-5xl sm:text-4xl">WorkShare</h1>
 				<Typed className="" strings={["Performance based rewards", "Proof of Skill NFTs"]} loop typeSpeed={120} backSpeed={140} />

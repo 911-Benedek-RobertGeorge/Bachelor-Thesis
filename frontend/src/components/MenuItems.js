@@ -13,16 +13,16 @@ export const MenuItems = ({ showMenu, active }) => {
 		>
 			<RiCloseLine onClick={showMenu} className="scale-150" />
 			<li>
-				<Link to="/">Home</Link>
+				<Link to="/home">Home</Link>
 			</li>
 			<li>
-				<Link to="/">Projects</Link>
+				<Link to="/projects">Projects</Link>
 			</li>
 			<li>
-				<Link to="/">Register</Link>
+				<Link to="/register">Register</Link>
 			</li>
 			<li>
-				<Link to="/">Contact</Link>
+				<Link to="/contact">Contact</Link>
 			</li>
 		</ul>
 	);

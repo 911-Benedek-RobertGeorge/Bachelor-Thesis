@@ -1,27 +1,15 @@
-html,
-body {
-	height: 100%;
-}
-
-.wrap {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .button {
-	min-width: 300px;
-	min-height: 60px;
+	width: 250px;
+	height: 50px;
 	font-family: "Nunito", sans-serif;
-	font-size: 22px;
+	font-size: 16px;
 	letter-spacing: 1.3px;
 	font-weight: 700;
 	color: #fff;
-	background: var(--color-logo);
+	background: var(--color-footer);
 	border: none;
 	border-radius: 1000px;
-	box-shadow: 12px 12px 24px var(--color-logo);
+	box-shadow: 12px 12px 24px var(--color-text);
 	transition: all 0.3s ease-in-out 0s;
 	cursor: pointer;
 	outline: none;
@@ -31,10 +19,10 @@ body {
 
 .button::before {
 	content: "";
-	border-radius: 1000px;
-	min-width: calc(300px + 12px);
-	min-height: calc(60px + 12px);
-	border: 6px solid var(--color-logo);
+	border-radius: 200px;
+	width: 155px;
+	height: 55px;
+	border: 6px solid var();
 	box-shadow: 0 0 60px rgba(0, 255, 203, 0.64);
 	position: absolute;
 	top: 50%;
@@ -60,7 +48,7 @@ body {
 	width: 30px;
 	height: 30px;
 	border-radius: 100%;
-	border: 6px solid var(--color-logo);
+	border: 6px solid var(--color-text);
 	position: absolute;
 	z-index: -1;
 	top: 50%;
@@ -82,8 +70,20 @@ body {
 		opacity: 1;
 	}
 	100% {
-		width: 300px;
-		height: 300px;
+		width: 200px;
+		height: 200px;
 		opacity: 0;
+	}
+}
+
+.loading {
+	animation: loading 0.5s 1s alternate infinite;
+	transition: width 0.5s 0.25s;
+	width: 50px;
+}
+@keyframes loading {
+	100% {
+		transform: scale(1.2);
+		background: #fff7ba;
 	}
 }

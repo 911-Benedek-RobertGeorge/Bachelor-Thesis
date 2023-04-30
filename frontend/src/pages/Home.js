@@ -5,8 +5,9 @@ import { Section } from "../components/Section";
 export const Home = () => {
 	return (
 		<div>
-			<Header />
-			<Section />
+			<div className=" ">
+				<Section />
+			</div>
 		</div>
 	);
 };

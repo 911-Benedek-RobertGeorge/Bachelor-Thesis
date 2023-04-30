@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/tw-elements/dist/js/**/*.js"],
+	mode: "jit",
 	theme: {
 		screens: {
 			sm: "320px",
-			// => @media (min-width: 640px) { ... }
+			// => @media (min-width: 320px) { ... }
 
 			md: "768px",
 			// => @media (min-width: 768px) { ... }
@@ -19,6 +20,22 @@ module.exports = {
 			// => @media (min-width: 1536px) { ... }
 		},
 		extend: {
+			animation: {
+				tilt: "tilt 10s infinite linear",
+			},
+			keyframes: {
+				tilt: {
+					"0%, 50%, 100%": {
+						transform: "rotate(0deg)",
+					},
+					"25%": {
+						transform: "rotate(0.5deg)",
+					},
+					"75%": {
+						transform: "rotate(-0.5deg)",
+					},
+				},
+			},
 			backgroundImage: {
 				"navbar-texture": "url('./assets/wave.svg')",
 				"home-image": "url('./assets/home.jpg')",
@@ -27,8 +44,11 @@ module.exports = {
 				"playful-hand-image": "url('./assets/hand.jpg')",
 			},
 			colors: {
-				"color-bg": "#81afdd",
+				"color-bg": "var(--color-bg)",
 				"color-logo": "#8925B1",
+				"footer-color": "var(--color-footer)",
+				"gradient-bg": "var(--gradient-bar)",
+				"color-text": " var(--color-text)",
 			},
 		},
 	},

@@ -24,8 +24,8 @@ const ConnectButton = () => {
 	return (
 		<button
 			onClick={connectWallet}
-			className={`xl:my-4   xl:scale-[1.25] sm:scale-75 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-800  to-cyan-500   group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2 
-				${connectedAccount ? `` : `w-64 h-16 text-xl top-2/4 animate-bounce`}
+			className={`xl:my-4  xl:scale-[1.25] md:scale-75 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-800  to-cyan-500   group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2 
+				${connectedAccount ? `` : `w-64 h-16 text-xl top-1/4 animate-bounce`}
 			 `}
 		>
 			<svg aria-hidden="true" class="w-6 h-5 mr-2 -ml-1" viewBox="0 0 2405 2501" fill="none" xmlns="http://www.w3.org/2000/svg">

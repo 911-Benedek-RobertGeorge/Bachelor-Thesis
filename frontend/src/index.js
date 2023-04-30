@@ -1,19 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { Web3ReactProvider } from "@web3-react/core";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Register } from "./pages/Register";
 import { Home } from "./pages/Home";
 import { Carousel, initTE } from "tw-elements";
+import { Projects } from "./pages/Projects";
+import { Contact } from "./pages/Contact";
+import Project from "./components/Project";
 initTE({ Carousel });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-	<Router>
-		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/register" element={<Register />} />
-		</Routes>
-	</Router>
+	<Web3ReactProvider>
+		<Router>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/register" element={<Register />} />
+				<Route path="/projects" element={<Projects />} />
+				<Route path="/project" element={<Project />} />
+
+				<Route path="/contact" element={<Contact />} />
+			</Routes>
+		</Router>
+	</Web3ReactProvider>
 );
