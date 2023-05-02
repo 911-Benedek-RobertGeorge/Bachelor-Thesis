@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import WorkShare from "./contracts/WorkShare.json";
-import { Header } from "./components/Header";
-import { Section } from "./components/Section";
+import { Header } from "./containers/Header";
+import { HomeSection } from "./containers/HomeSection";
 
 export const App = () => {
 	return (
 		<div>
 			<Header />
-			<Section />
+			<HomeSection />
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ const contractAddress = "0xd451d8cde7fbf863c0a12dd3e8d2731d6d4da8bd";
 const { abi } = require("../contracts/WorkShare.json");
 //console.log("THE ABI " + abi);
 let account = "";
-let web3;
+let web3 = undefined;
 const getWeb3 = async () => {
 	// Modern dapp browsers
 	if (web3 !== undefined) return web3;

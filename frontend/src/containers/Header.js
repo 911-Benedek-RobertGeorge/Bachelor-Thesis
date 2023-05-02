@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assets/logo2.png";
 import { Link } from "react-router-dom";
-import { MenuItems } from "./MenuItems";
+import { MenuItems } from "../components/MenuItems";
 import { RiMenu3Line } from "react-icons/ri";
 import Typed from "react-typed";
 
@@ -23,7 +23,7 @@ export const Header = () => {
 				</div>
 				<ul className="hidden md:flex gap-8 p-6 uppercase font-bold  ">
 					<li>
-						<Link to="/">Home</Link>
+						<Link to="/home">Home</Link>
 					</li>
 					<li>
 						<Link to="/projects">Projects</Link>

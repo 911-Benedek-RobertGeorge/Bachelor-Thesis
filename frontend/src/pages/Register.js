@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { Header } from "../components/Header";
+import React from "react";
+import { Header } from "../containers/Header";
 import { GetMail } from "../containers/getMail/GetMail";
 import web3Img from "../assets/web3-no-background.png";
-import { NftCard } from "../components/card/NftCard";
 
 export const Register = () => {
 	return (
-		<div className=" mx-auto bg-gradient-to-b from-color-bg to-footer-color h-screen w-full flex flex-col items-center  ">
+		<div className=" bg-gradient-to-b from-color-bg to-footer-color h-screen w-full flex flex-col items-center  ">
 			<Header className=" " />
-			<div className="gap-4 grid grid-cols-1 md:grid-cols-5   md:grid-rows-4 place-items-center">
+			<div className=" bg-gradient-to-b from-color-bg to-footer-color gap-4 grid grid-cols-1 md:grid-cols-5   md:grid-rows-4 place-items-center">
 				<img src={web3Img} alt="web3" className="flex md:row-span-2 md:col-span-3 scale-50 md:scale-100"></img>
 				<div className=" place-self-start flex flex-col items-center  font-extrabold text-gradient  md:col-span-2  md:row-span-2   ">
 					<h1 className="text-3xl  ">Start your journey </h1>
