@@ -12,7 +12,7 @@ export const Header = () => {
 	};
 	return (
 		<div className="select-none flex w-full p-2 text-color-logo   justify-between mt-[-3%] items-center ">
-			<div className="select-none flex flex-col items-center  md:scale-50  sm:scale-50 text-center text-white font-extrabold">
+			<div className="h-48 select-none flex flex-col items-center  md:scale-50  sm:scale-50 text-center text-white font-extrabold">
 				<img src={logo} alt="logo" className="" />
 				<h1 className="md:text-5xl sm:text-4xl">WorkShare</h1>
 				<Typed className="" strings={["Performance based rewards", "Proof of Skill NFTs"]} loop typeSpeed={120} backSpeed={140} />
@@ -23,7 +23,7 @@ export const Header = () => {
 				</div>
 				<ul className="hidden md:flex gap-8 p-6 uppercase font-bold  ">
 					<li>
-						<Link to="/home">Home</Link>
+						<Link to="/">Home</Link>
 					</li>
 					<li>
 						<Link to="/projects">Projects</Link>

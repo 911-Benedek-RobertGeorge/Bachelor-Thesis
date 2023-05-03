@@ -16,7 +16,7 @@ export const HomeSection = () => {
 		<div>
 			{" "}
 			<div className="place-self start snap-y scroll-smooth  snap-mandatory h-screen w-screen overflow-scroll">
-				<div className=" select-none snap-start  flex flex-col items-center bg-home-image w-full h-screen bg-cover bg-center flex items-center px-4">
+				<div className=" select-none snap-start  flex flex-col items-center bg-home-image w-full h-screen bg-cover bg-bottom flex items-center px-4">
 					<Header />
 					<ConnectButton />
 				</div>{" "}

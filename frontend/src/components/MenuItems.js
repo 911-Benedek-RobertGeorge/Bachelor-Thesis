@@ -7,13 +7,13 @@ export const MenuItems = ({ showMenu, active }) => {
 		<ul
 			className={
 				active
-					? "md:hidden flex-col flex items-center fixed inset-0 left-2/4  justify-center gap-4 p-6 uppercase font-bold bg-black/40 blackdrop-blur-lg"
+					? "md:hidden z-10 flex-col flex items-center fixed inset-0 left-2/4  justify-center gap-4 p-6 uppercase font-bold bg-black/40 blackdrop-blur-lg"
 					: "hidden"
 			}
 		>
 			<RiCloseLine onClick={showMenu} className="scale-150" />
 			<li>
-				<Link to="/home">Home</Link>
+				<Link to="/">Home</Link>
 			</li>
 			<li>
 				<Link to="/projects">Projects</Link>
