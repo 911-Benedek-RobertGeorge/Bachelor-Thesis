@@ -3,8 +3,8 @@ import { Header } from "../containers/Header";
 
 export const Contact = () => {
 	return (
-		<div className=" mx-auto bg-gradient-to-b from-color-bg to-footer-color h-screen w-full h-screen flex flex-col items-center  ">
-			<Header className=" " />
+		<div className=" flex flex-col bg-gradient-to-b from-color-bg to-footer-color h-screen   items-center  ">
+			<Header />
 		</div>
 	);
 };

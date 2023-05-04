@@ -1,11 +1,15 @@
 import Web3 from "web3";
 
 const contractAddress = "0xd451d8cde7fbf863c0a12dd3e8d2731d6d4da8bd";
+
 ///console.log("THE ADDRESS " + contractAddress);
 const { abi } = require("../contracts/WorkShare.json");
+
 //console.log("THE ABI " + abi);
 let account = "";
 let web3 = undefined;
+let contract = undefined;
+
 const getWeb3 = async () => {
 	// Modern dapp browsers
 	if (web3 !== undefined) return web3;
@@ -38,9 +42,12 @@ const getWeb3 = async () => {
 
 const getContract = async () => {
 	try {
-		/// get a const that is web3 save it
-		web3 = await getWeb3();
-		const contract = new web3.eth.Contract(abi, contractAddress);
+		if (contract === undefined) {
+			/// get a const that is web3 save it
+			web3 = await getWeb3();
+			contract = new web3.eth.Contract(abi, contractAddress);
+		}
+
 		return contract;
 	} catch (error) {
 		console.error(error);
@@ -48,12 +55,6 @@ const getContract = async () => {
 	}
 };
 
-const registerUser = async (web3, email) => {
-	const contract = await getContract(web3);
-	const accounts = await web3.eth.getAccounts();
-	const result = await contract.methods.register(email).send({ from: accounts[0] });
-	return result;
-};
 const getContractAddress = () => {
 	return contractAddress;
 };
