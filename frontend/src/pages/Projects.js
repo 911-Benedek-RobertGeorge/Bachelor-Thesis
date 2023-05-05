@@ -13,6 +13,7 @@ const project = {
 };
 const projects = [
 	{
+		id: 1,
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
@@ -23,6 +24,7 @@ const projects = [
 		deadline: 123412341234,
 	},
 	{
+		id: 2,
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
@@ -32,6 +34,7 @@ const projects = [
 		deadline: 123412341234,
 	},
 	{
+		id: 3,
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
@@ -41,6 +44,7 @@ const projects = [
 		deadline: 123412341234,
 	},
 	{
+		id: 4,
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
@@ -50,6 +54,7 @@ const projects = [
 		deadline: 123412341234,
 	},
 	{
+		id: 5,
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
@@ -59,6 +64,7 @@ const projects = [
 		deadline: 123412341234,
 	},
 	{
+		id: 6,
 		shortDescription:
 			"ou can also use varsdasdasdsadasdsadasdasdas asd sa dasdasdas as dasdas asd asd asiant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",

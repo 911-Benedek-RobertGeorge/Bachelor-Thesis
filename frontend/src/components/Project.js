@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import nft from "../assets/cool-dev.png";
 
+import { getContract, getAccount } from "../utils/contractHelpers";
+
 const Project = ({ project }) => {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 
 	const handleApply = async () => {
 		setLoading(true);
-
+		console.log(loading);
 		try {
-			const Contract = new Contract(contractAbi, process.env.REACT_APP_CONTRACT_ADDRESS);
-			await Contract.methods.apply(projectId).send({ from: account });
+			const Contract = await getContract();
+			const account = await getAccount();
+			await Contract.methods.applyForProject(project.id).send({ from: account });
 			setSuccess(true);
 		} catch (error) {
 			console.error(error);
@@ -54,11 +57,12 @@ const Project = ({ project }) => {
 					</div>
 				</a>
 			</div>
+			{success && <p className="text-green-600 font-bold">You have successfully applied to this project!</p>}
 			<button
 				onClick={handleApply}
 				className="z-10 mt-8 flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-r from-cyan-500 to-cyan-700"
 			>
-				<p className=" justify-center text-sm">Apply </p>
+				<p className=" justify-center text-sm">{loading ? "Loading" : "Apply"}</p>
 			</button>
 		</div>
 	);

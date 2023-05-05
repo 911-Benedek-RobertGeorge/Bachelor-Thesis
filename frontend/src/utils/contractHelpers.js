@@ -43,7 +43,6 @@ const getWeb3 = async () => {
 const getContract = async () => {
 	try {
 		if (contract === undefined) {
-			/// get a const that is web3 save it
 			web3 = await getWeb3();
 			contract = new web3.eth.Contract(abi, contractAddress);
 		}
@@ -71,4 +70,4 @@ const getAccount = async () => {
 	return account;
 };
 
-export { getWeb3, getContract, registerUser, getContractAddress, getContractABI, getAccount };
+export { getWeb3, getContract, getContractAddress, getContractABI, getAccount };
