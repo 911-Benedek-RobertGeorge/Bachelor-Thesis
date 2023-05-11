@@ -11,7 +11,9 @@ contract MasteryMilestones is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("MasteryMilestones", "DEV") {}
+    constructor() ERC721("MasteryMilestones", "DEV") {
+        
+    }
 
     function mintNFT(address recipient, string memory tokenURI) // how can I allow only the admins to be able to mint
         public onlyOwner

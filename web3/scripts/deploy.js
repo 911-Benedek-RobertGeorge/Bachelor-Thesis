@@ -1,32 +1,45 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
 
+const API_KEY = process.env.API_KEY;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+
+const contractJson = require("../artifacts/contracts/WorkShare.sol/WorkShare.json");
+
+console.log("Provider : ");
+// Provider
+const alchemyProvider = new hre.ethers.providers.AlchemyProvider("maticmum", API_KEY);
+//console.log(alchemyProvider);
+
+console.log("Signer : ");
+// Signer
+const signer = new hre.ethers.Wallet(PRIVATE_KEY, alchemyProvider);
+console.log(signer.address);
+
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+	const WorkShareFactory = await ethers.getContractFactory("WorkShare");
 
-  const lockedAmount = hre.ethers.utils.parseEther("0.001");
+	// Start deployment, returning a promise that resolves to a contract object
+	const workShareContract = await WorkShareFactory.deploy();
+	console.log("Contract WorkShare deployed to address:", workShareContract.address);
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+	const WorkShareTokenFactory = await ethers.getContractFactory("WorkShareToken");
+	const workShareTokenContract = await WorkShareTokenFactory.deploy();
+	console.log("Contract WorkShareToken deployed to address:", workShareTokenContract.address);
 
-  await lock.deployed();
+	const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
+	const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
+	console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
 
-  console.log(
-    `Lock with ${ethers.utils.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+	//initialize(token address,commission, nft address)
+	const tx = await workShareContract.initialize(workShareTokenContract.address, 5, masteryMilestoneContract.address);
+	await tx.wait();
+	console.log(tx);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+	.then(() => process.exit(0))
+	.catch((error) => {
+		console.error(error);
+		process.exit(1);
+	});

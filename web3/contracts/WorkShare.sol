@@ -2,6 +2,7 @@
 
 pragma solidity >=0.8.0 < 0.9.0; /// greater than 0.8.0 to avoid overflows
 import './WorkShareToken.sol';
+import './MasteryMilestones.sol';
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol"; 
 
@@ -10,6 +11,7 @@ contract WorkShare is Initializable, Ownable{
     // ERC20 token used for rewarding developers
     IERC20 public workShareToken;
     
+    MasteryMilestones public masteryMilestones;
     //MAYBE ADD THE NFT AND THE ADMINS CAN MINT A NFT AND GIVE IT TO THE PERSON WHO COMPLETED THE PROJECT
     
     // Total number of developers
@@ -18,11 +20,17 @@ contract WorkShare is Initializable, Ownable{
     // Total number of projects
     uint32 nrOfProjects;
 
+    // the commision for each project posted 
+    uint32 public commision;
+
+    // the commision that can be withdraw 
+    uint public totalCommission;
+
     // mapping for registered developers, address to email, 
-    //the users emails are safe because there is no way to iterate through a mapping
-    mapping (address => string) private developers;   // private or public? 
+    //the users emails are safe because there is no way to iterate through the mapping
+    mapping (address => string) private developers; 
     
-    // the managers, Users that can create contracts
+    // managers, Users that can create contracts
     mapping (address => bool) admins;
     
     // index to project mapping 
@@ -33,37 +41,44 @@ contract WorkShare is Initializable, Ownable{
         _;
     }
 
-
+    function initialize(address payable _token, uint32 _commision,address _nftContractAddress) public initializer onlyOwner{
+        workShareToken = WorkShareToken(_token);
+        masteryMilestones = MasteryMilestones(_nftContractAddress);
+        admins[msg.sender] = true;
+        require(commision < 50, "The commision has to be less than 50%.");
+        commision = _commision;
+    }
+    
 ///TODO 
-    // - add a tax for each project, 3%  (add somebody who can withdraw it from the contract
-    // - add a new nft to the address somebody has , maybe a mapping address - > string , where the string is the nft metadata or the nft from pinata
+    // add a new nft to the address somebody has , maybe a mapping address - > string , where the string is the nft metadata or the nft from pinata
     // maybe add a recursive payment ( transferng tokens in ethereum) 
+    // maybe add balance of tokens 
+    // add a message for register success or error 
+    // pages for create project, myprojectsDev and admin
+
 
     enum State{ OPEN, INPROGRESS, COMPLETED, FAILED}
-      //must delete a project after finalize / not commpleted, or to make a variable there
+    //must delete a project after finalize / not commpleted, or to make a variable there
     //finalize function works even if we dont have an developer 
   
     struct Project{
-        address manager; //TODO MAYBE CHANGE THIS TO PAYABLE
-        string shortDescription;
-        State state; 
-        string requirementsDocumentCID; // IPFS pinata CID
         uint64 reward; // the number of workShareTokens for completing the task
         uint64 penalty; // applied if after deadline
         uint64 deadline; //unix epoch , curently using only 31 bits, but this way we are future safe
         uint32 nrOfApplicants;
-        mapping(uint32 => address) applications; // all the addresses that want this project
+        uint32 id;
+
+        address manager; //TODO MAYBE CHANGE THIS TO PAYABLE
+        string shortDescription;
+        State state; 
+        string requirementsDocumentCID; // IPFS pinata CID
+        address[] applicants;
         address payable acceptedDeveloper; 
     }
 
     function getAllApplicants(uint32 projectNumber) public view onlyAdmin returns (address[] memory){
-        uint32 nrOfApplicants = projects[projectNumber].nrOfApplicants;
-        address[] memory applicants = new address[](nrOfApplicants);
-        for (uint32 i = 0; i < nrOfApplicants; ++i) { // ++i for less gas consumption (5 gas per iteration )
-            applicants[i] = projects[projectNumber].applications[i];
-        }
-        return applicants;
-    }
+        return projects[projectNumber].applicants;
+    } 
 
     function getStringLenght(string memory str) public pure returns(uint256) {
         bytes memory tempEmptyStringTest = bytes(str); // Uses memory
@@ -83,8 +98,15 @@ contract WorkShare is Initializable, Ownable{
         require(projects[_projectNumber].state == State.OPEN, "You can only apply to open projects.");
         string memory email = developers[msg.sender];
         require(bytes(email).length != 0, "You have to be registered first");
-        uint32 nrOfApplicants = projects[_projectNumber].nrOfApplicants ++; 
-        projects[_projectNumber].applications[nrOfApplicants] = msg.sender;  ///indexed from 0 
+        address[] memory applicants = projects[_projectNumber].applicants;
+        for(uint i = 0; i < applicants.length; ++i){
+            if(applicants[i] == msg.sender){
+                revert("You already applied for this project.");
+            }
+        }
+        projects[_projectNumber].applicants.push( msg.sender);  /// indexed from 0
+        projects[_projectNumber].nrOfApplicants++; 
+ 
     }
 
     //When the project is approved by the manager, giving the reward to the developer
@@ -125,10 +147,6 @@ contract WorkShare is Initializable, Ownable{
         project.state = State.FAILED;
     }
 
-    function initialize(address payable _token) public initializer onlyOwner{
-        workShareToken = WorkShareToken(_token);
-        admins[msg.sender] = true;
-    }
     
     //Create a project 
     event CreateProjectEvent(uint32 nrOfProjects,string _requirementsDocumentCID,uint64 _reward, uint64 _penalty, uint64 _deadline);
@@ -141,13 +159,17 @@ contract WorkShare is Initializable, Ownable{
         require(workShareToken.transferFrom(msg.sender, address(this), _reward),"The transfer of reward to the contract has failed");
         
         Project storage newProject = projects[nrOfProjects];
-        ++nrOfProjects; // ++i cost less gas than i++
+
+        newProject.id = nrOfProjects; 
+        ++nrOfProjects;        // ++i cost less gas than i++
 
         
         newProject.manager = msg.sender;
         newProject.shortDescription = _shortDescription;
         newProject.state = State.OPEN;
         newProject.requirementsDocumentCID = _requirementsDocumentCID;
+
+        _reward = _reward - (_reward / 100) * commision; // take the commision from the reward
         newProject.reward = _reward;
         newProject.penalty = _penalty;
         newProject.deadline = _deadline;
@@ -167,8 +189,9 @@ contract WorkShare is Initializable, Ownable{
 
 
     //The developers are going to register with the address and email.
+    //Maybe add change email functionality 
     function register(string memory _email) public { 
-        require(bytes(_email).length == 0, "You are already registered");
+        require(bytes(developers[msg.sender]).length == 0, "You are already registered");
         developers[msg.sender] = _email;
         ++nrOfDevelopers;
     }
@@ -178,28 +201,89 @@ contract WorkShare is Initializable, Ownable{
         projects[_projectNumber].manager = _newManager;
     }
 
-    //GETTERS
-    // function getAllProjects() public view returns(Project[] memory){
-    //     Project[] memory projectList = new Project[](nrOfProjects); 
-    //     for(uint32 i = 0; i < nrOfProjects; ++i){
-    //         projectList[i] = projects[i];
-    //     }
-    //     return projectList;
-    // }
+   // GETTERS
+    function getAllProjects() public view returns(Project[] memory){
+        Project[] memory projectList = new Project[](nrOfProjects); 
+        for(uint32 i = 0; i < nrOfProjects; ++i){
+            projectList[i] = projects[i];
+        }
+        return projectList;
+    }
 
-    // function getOpenProjects() public view returns(Project[] memory){
-    //      Project[] memory projectList = new Project[](nrOfProjects); 
-    //     for(uint32 i = 0; i < nrOfProjects; ++i){
-    //         if(projects[i].state == State.OPEN)
-    //             {
-    //                 projectList[i] = projects[i];
-    //             }
-    //     }
-    //     return projectList;
-    // }
+    function getOpenProjects() public view returns(Project[] memory){
+        Project[] memory projectList = new Project[](nrOfProjects); 
+        for(uint32 i = 0; i < nrOfProjects; ++i){
+            if(projects[i].state == State.OPEN)
+                {
+                    projectList[i] = projects[i];
+                }
+        }
+        return projectList;
+    }
 
     function getEmailOfDeveloper(address _address) public view onlyAdmin returns(string memory) {
         return developers[_address];
     }
+
+   function getMyProjectsDev() public view returns (Project[] memory) {
+    uint32 count = 0;
+    for (uint32 i = 0; i < nrOfProjects; ++i) {
+        if (projects[i].acceptedDeveloper == msg.sender) {
+            count++;
+        }
+    }
+    Project[] memory result = new Project[](count);
+    uint32 j = 0;
+    for (uint32 i = 0; i < nrOfProjects; ++i) {
+        if (projects[i].acceptedDeveloper == msg.sender) {
+            result[j] = projects[i];
+            j++;
+        }
+    }
+
+    return result;
+}
+    // returns the list of projects of a specific Admin
+    function getMyProjectsAdmin() public view onlyAdmin returns (Project[] memory) {
+    uint32 count = 0;
+    for (uint32 i = 0; i < nrOfProjects; ++i) {
+        if (projects[i].manager == msg.sender) {
+            count++;
+        }
+    }
+
+    Project[] memory result = new Project[](count);
+    uint32 j = 0;
+    for (uint32 i = 0; i < nrOfProjects; ++i) {
+        if (projects[i].manager == msg.sender) {
+            result[j] = projects[i];
+            j++;
+        }
+    }
     
+    return result;
+    }
+
+    // returns the balance of WST that the caller has
+    function getMyBalance() public view returns(uint){
+        return workShareToken.balanceOf(msg.sender);
+    }
+
+  
+
+    function withdrawCommision() public onlyOwner{
+        require(totalCommission > 0, "No commission available for withdrawal.");
+        require(workShareToken.transfer(msg.sender, totalCommission), "The transfer of commission tokens failed.");
+        totalCommission = 0;
+    }
+ 
+    //add a withdraw fct for dev or put a contract address in the react app.
+
+
+    //NFTS 
+
+    function mintNFT(address _recipient, string memory _tokenURI) public onlyAdmin{
+        masteryMilestones.mintNFT(_recipient,_tokenURI);
+
+    }
 } 
