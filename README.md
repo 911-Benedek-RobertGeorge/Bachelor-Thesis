@@ -1,10 +1,8 @@
 # WorkShare
 
 The WorkShare application is a groundbreaking solution that leverages blockchain
-technology to address multiple challenges in project management and compensa-
-tion. This abstract highlights the key problems it solves, including high taxes and
-transfer costs imposed by banks, scalability issues for companies, and difficulties in
-finding hardworking software developers.
+technology to address multiple challenges in project management and compensation.  
+
 In the current business environment, companies and employees in Romania face
 the weighty burden of government taxes and contributions, ranging from 35% to
 47.25% of the gross salary [Ana23a], alongside the additional transfer costs imposed
