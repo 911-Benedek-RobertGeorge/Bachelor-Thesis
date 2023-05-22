@@ -10,6 +10,7 @@ import { Carousel, initTE } from "tw-elements";
 import { Projects } from "./pages/Projects";
 import { Contact } from "./pages/Contact";
 import Project from "./components/Project";
+import { CreateProject } from "./pages/CreateProject";
 initTE({ Carousel });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -21,6 +22,7 @@ root.render(
 				<Route path="/register" element={<Register />} />
 				<Route path="/projects" element={<Projects />} />
 				<Route path="/project" element={<Project />} />
+				<Route path="/project-form" element={<CreateProject />} />
 
 				<Route path="/contact" element={<Contact />} />
 			</Routes>

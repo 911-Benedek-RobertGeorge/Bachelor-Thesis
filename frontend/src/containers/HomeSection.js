@@ -17,7 +17,7 @@ export const HomeSection = () => {
 				<div className=" text-white snap-start bg-hands-image w-full h-screen bg-cover bg-center flex items-center px-4">
 					Bring the managers and developers toghether , the people that need projects done with dev
 				</div>
-				<div className="flex flex-col text-white snap-start bg-playful-hand-image w-full h-screen bg-cover bg-bottom   items-center px-4">
+				<div className="flex flex-col justify-bottom text-white snap-start bg-playful-hand-image w-full h-screen bg-cover bg-bottom   items-center px-4">
 					<NftShowOff />
 					<h1>BENEFICII E PLATIT MAI BN NFTS SI EXEMPLE DE NFT, THE TOKEN</h1>
 					<div className="the token ">
