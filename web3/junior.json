@@ -1,0 +1,31 @@
+{
+	"name": "Junior",
+	"description": "Enthusiastic junior developer eager to learn and contribute to software projects. Possesses basic programming skills and a passion for problem-solving.",
+	"image": "ipfs://QmdCHkrtnmkpujmKgVeEU4Cgf6DoQKhX5PHmvQrHgcXw83",
+	"attributes": [
+		{
+			"trait_type": "Attention to detail",
+			"value": "Attentive"
+		},
+		{
+			"trait_type": "Learning ability",
+			"value": "Fast learner"
+		},
+		{
+			"trait_type": "Teamwork",
+			"value": "Collaborative"
+		},
+		{
+			"trait_type": "Creativity",
+			"value": "Innovative"
+		},
+		{
+			"trait_type": "Communication",
+			"value": "Clear communicator"
+		},
+		{
+			"trait_type": "Skills",
+			"value": "Programming, Problem-solving, Debugging, Git, Java"
+		}
+	]
+}

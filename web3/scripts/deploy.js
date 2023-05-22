@@ -7,6 +7,7 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const contractJson = require("../artifacts/contracts/WorkShare.sol/WorkShare.json");
 
 console.log("Provider : ");
+
 // Provider
 const alchemyProvider = new hre.ethers.providers.AlchemyProvider("maticmum", API_KEY);
 //console.log(alchemyProvider);
@@ -27,12 +28,12 @@ async function main() {
 	const workShareTokenContract = await WorkShareTokenFactory.deploy();
 	console.log("Contract WorkShareToken deployed to address:", workShareTokenContract.address);
 
-	const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
-	const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
-	console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
+	// const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
+	// const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
+	// console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
 
 	//initialize(token address,commission, nft address)
-	const tx = await workShareContract.initialize(workShareTokenContract.address, 5, masteryMilestoneContract.address);
+	const tx = await workShareContract.initialize(workShareTokenContract.address, 5);
 	await tx.wait();
 	console.log(tx);
 }

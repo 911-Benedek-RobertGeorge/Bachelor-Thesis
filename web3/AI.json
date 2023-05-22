@@ -1,0 +1,31 @@
+{
+	"name": "AI Technical",
+	"description": "AI technical expert specializing in machine learning and deep learning algorithms. Proficient in Python and frameworks like TensorFlow. Experienced in developing AI models for various applications.",
+	"image": "ipfs://QmNjyhvpfxWFGPSja3vMsKE5bUAtvsgzBRgRN4Sq4VK3dp",
+	"attributes": [
+		{
+			"trait_type": "Attention to detail",
+			"value": "Attentive"
+		},
+		{
+			"trait_type": "Analytical skills",
+			"value": "Analytical"
+		},
+		{
+			"trait_type": "Continuous learning",
+			"value": "Curious"
+		},
+		{
+			"trait_type": "Problem-solving",
+			"value": "Resourceful"
+		},
+		{
+			"trait_type": "Team player",
+			"value": "Collaborative"
+		},
+		{
+			"trait_type": "Skills",
+			"value": "Machine Learning, Deep Learning, Python , TensorFlow"
+		}
+	]
+}

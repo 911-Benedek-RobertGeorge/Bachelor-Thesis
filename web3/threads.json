@@ -1,0 +1,32 @@
+{
+	"name": "Threads Programmer",
+	"description": "Threads programmer specializing in writing concurrent code and optimizing performance. Experienced in handling thread synchronization, mutexes, and deadlock detection.",
+	"image": "ipfs://QmPPZZo2cZtNWVf8hJRgNLuWSpYHVJ5H5rPJz26QRANDfM",
+
+	"attributes": [
+		{
+			"trait_type": "Attention to detail",
+			"value": "Meticulous"
+		},
+		{
+			"trait_type": "Problem-solving skills",
+			"value": "Analytical"
+		},
+		{
+			"trait_type": "Critical thinking",
+			"value": "Logical"
+		},
+		{
+			"trait_type": "Collaboration",
+			"value": "Team player"
+		},
+		{
+			"trait_type": "Efficiency",
+			"value": "Optimization-oriented"
+		},
+		{
+			"trait_type": "skills",
+			"value": "Parallel Programming, Thread Synchronization, Mutex, Deadlock Detection"
+		}
+	]
+}

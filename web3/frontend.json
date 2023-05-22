@@ -1,0 +1,31 @@
+{
+	"name": "Frontend",
+	"description": "Experienced frontend developer with expertise in building user interfaces and creating engaging web experiences. Proficient in HTML, CSS, and JavaScript frameworks.",
+	"image": "ipfs://QmTTtM6aHtsK822QpnhWVR2vUYgB36Zk2CbBBnq2zgit3t",
+	"attributes": [
+		{
+			"trait_type": "Attention to detail",
+			"value": "Meticulous"
+		},
+		{
+			"trait_type": "Problem-solving skills",
+			"value": "Analytical"
+		},
+		{
+			"trait_type": "Creativity",
+			"value": "Innovative"
+		},
+		{
+			"trait_type": "Communication",
+			"value": "Effective communicator"
+		},
+		{
+			"trait_type": "Adaptability",
+			"value": "Flexible"
+		},
+		{
+			"trait_type": "Skills",
+			"value": "HTML, CSS, JavaScript, React"
+		}
+	]
+}

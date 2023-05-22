@@ -3,3 +3,6 @@
 npx hardhat run scripts/deploy_NFT.js --network goerli  
 
 
+Contract WorkShare deployed to address: 0x069Ef7E6BE3356691bb630d5b7754862DFD4904e
+Contract WorkShareToken deployed to address: 0x0bdDE86878A11A834655F48e9AC94a55eEC32536
+Contract MasteryMilestone deployed to address: 0xF6Fc5cD269024F7dE6d192Cf1410DBAaAC34a412
