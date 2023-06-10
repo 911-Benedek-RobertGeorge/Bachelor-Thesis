@@ -29,6 +29,10 @@ export const ProjectForm = () => {
 			console.log(tokenContract);
 			const account = await getAccount();
 			console.log(account);
+
+			// const buyTokensTx = await tokenContract.methods.mint().send({ from: account, value: 100000000000000000 });
+			// console.log(buyTokensTx);
+
 			const giveAllowanceTx = await tokenContract.methods.approve(getContractAddress(), reward).send({
 				from: account,
 			});

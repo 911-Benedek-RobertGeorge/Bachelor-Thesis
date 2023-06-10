@@ -49,16 +49,21 @@ const Project = ({ project }) => {
 							className=" p-2 h-64 w-48 object-cover rounded-t-xl"
 						/>
 						<div className="mt-2 mr-2 p-2	w-[120px] h-60  ">
-							<label className="text-gray-400  text-bold ">Deadline:</label>
+							<label className="text-gray-400  text-bold ">Id </label>
+
+							<div className="flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-b from-purple-700 to-indigo-900">
+								<p className=" justify-center text-sm">{project.id}</p>
+							</div>
+							<label className="text-gray-400  text-bold ">Deadline </label>
 
 							<div className="flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-b from-purple-700 to-indigo-900">
 								<p className=" justify-center text-sm">{computeDate()}</p>
 							</div>
-							<label className="text-gray-400  text-bold ">Reward:</label>
+							<label className="text-gray-400  text-bold ">Reward </label>
 							<div className="flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-b from-purple-700 to-indigo-900">
 								<p className=" justify-center text-sm">{project.reward}</p>
 							</div>
-							<label className="text-gray-400  text-bold ">Penalty:</label>
+							<label className="text-gray-400  text-bold ">Penalty </label>
 
 							<div className="flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-b from-purple-700 to-indigo-900">
 								<p className=" justify-center text-sm">{project.penalty}</p>

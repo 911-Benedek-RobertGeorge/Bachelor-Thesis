@@ -98,7 +98,7 @@ export const MyProjects = () => {
 			<button onClick={getProjects} className="border-2 border-color-white">
 				{loading ? "Loading..." : "Get Projects"}
 			</button>
-			<ProjectList projects={projects}></ProjectList>
+			<ProjectList projects={projectList}></ProjectList>
 		</div>
 	);
 };
