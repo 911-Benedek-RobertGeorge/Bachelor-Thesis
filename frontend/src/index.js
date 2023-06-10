@@ -11,6 +11,8 @@ import { Projects } from "./pages/Projects";
 import { Contact } from "./pages/Contact";
 import Project from "./components/Project";
 import { CreateProject } from "./pages/CreateProject";
+import { MyProjects } from "./pages/MyProjects";
+import { MyPage } from "./pages/MyPage";
 initTE({ Carousel });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -23,8 +25,10 @@ root.render(
 				<Route path="/projects" element={<Projects />} />
 				<Route path="/project" element={<Project />} />
 				<Route path="/project-form" element={<CreateProject />} />
+				<Route path="/my-projects" element={<MyProjects />} />
+				<Route path="/my-page" element={<MyPage />} />
 
-				<Route path="/contact" element={<Contact />} />
+				<Route path="/contact" element={<MyProjects />} />
 			</Routes>
 		</Router>
 	</Web3ReactProvider>

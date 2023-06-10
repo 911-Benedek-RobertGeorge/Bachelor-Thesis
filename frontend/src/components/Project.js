@@ -13,9 +13,9 @@ const Project = ({ project }) => {
 	const showMessage = () => {
 		setIsAlertVisible(true);
 
-		setTimeout(() => {
-			setIsAlertVisible(false);
-		}, 3000);
+		// setTimeout(() => {
+		// 	setIsAlertVisible(false);
+		// }, 3000);
 	};
 
 	const handleApply = async () => {
@@ -44,8 +44,8 @@ const Project = ({ project }) => {
 				<a className="z-0" href={"https://gateway.pinata.cloud/ipfs/" + project.requirementsDocumentCID} target="_blank">
 					<div className="flex flex-row">
 						<img
-							src="https://gateway.pinata.cloud/ipfs/QmTV7DRqqHNsC5FGCk7ejhLE8x9rmFrA5636FrwwD7XzcG"
-							alt={project.requirementsDocumentCID}
+							src={"https://gateway.pinata.cloud/ipfs/" + project.nftCID}
+							alt={project.nftCID}
 							className=" p-2 h-64 w-48 object-cover rounded-t-xl"
 						/>
 						<div className="mt-2 mr-2 p-2	w-[120px] h-60  ">
@@ -73,7 +73,7 @@ const Project = ({ project }) => {
 					</div>
 				</a>
 			</div>
-			{isAlertVisible && <p className="text-green-600 font-bold">You have successfully applied to this project!</p>}
+			{success && <p className="text-green-600 font-bold">You have successfully applied to this project!</p>}
 			<button
 				onClick={handleApply}
 				className="z-10 mt-8 flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-r from-cyan-500 to-cyan-700"

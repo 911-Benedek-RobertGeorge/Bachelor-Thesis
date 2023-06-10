@@ -1,9 +1,7 @@
 import "./GetMail.css";
 import React, { useState } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { Contract } from "@ethersproject/contracts";
+
 import { getContractAddress, getContractABI, getContract, getWeb3, getAccount } from "../../utils/contractHelpers";
-import web3 from "web3";
 
 export const GetMail = () => {
 	const [email, setEmail] = useState("");

@@ -11,7 +11,7 @@ import nft4 from "../assets/purple-laptop.png";
 
 export const NftShowOff = () => {
 	const handVariants = {
-		visible: { transition: { duration: 2 }, x: -250, y: -300 },
+		visible: { transition: { duration: 2 }, x: -300, y: -300 },
 		hidden: { opacity: 1, scale: 0.75 },
 	};
 	const controls = useAnimation();

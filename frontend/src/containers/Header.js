@@ -33,6 +33,10 @@ export const Header = () => {
 						<Link to="/register">Register</Link>
 					</li>
 					<li>
+						{" "}
+						<Link to="/personal">Personal</Link>
+					</li>
+					<li>
 						<Link to="/contact">Contact</Link>
 					</li>
 				</ul>

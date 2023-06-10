@@ -1,14 +1,16 @@
 import Web3 from "web3";
 
-const contractAddress = "0xd451d8cde7fbf863c0a12dd3e8d2731d6d4da8bd";
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+const tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
 
-///console.log("THE ADDRESS " + contractAddress);
 const { abi } = require("../contracts/WorkShare.json");
+const { tokenAbi } = require("../contracts/WorkShareToken.json");
 
 //console.log("THE ABI " + abi);
 let account = "";
 let web3 = undefined;
 let contract = undefined;
+let tokenContract = undefined;
 
 const getWeb3 = async () => {
 	// Modern dapp browsers
@@ -54,6 +56,20 @@ const getContract = async () => {
 	}
 };
 
+const getTokenContract = async () => {
+	try {
+		if (tokenContract === undefined) {
+			web3 = await getWeb3();
+			tokenContract = new web3.eth.Contract(tokenAbi, tokenAddress);
+		}
+
+		return tokenContract;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+};
+
 const getContractAddress = () => {
 	return contractAddress;
 };
@@ -70,4 +86,4 @@ const getAccount = async () => {
 	return account;
 };
 
-export { getWeb3, getContract, getContractAddress, getContractABI, getAccount };
+export { getWeb3, getContract, getTokenContract, getContractAddress, getContractABI, getAccount };

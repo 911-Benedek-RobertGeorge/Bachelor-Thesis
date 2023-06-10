@@ -17,6 +17,7 @@ const projects = [
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
+		nftCID: "QmNjyhvpfxWFGPSja3vMsKE5bUAtvsgzBRgRN4Sq4VK3dp",
 		reward: 1234,
 		penalty: 100,
 		nrOfApplicants: 1,
@@ -28,6 +29,8 @@ const projects = [
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
+		nftCID: "QmNjyhvpfxWFGPSja3vMsKE5bUAtvsgzBRgRN4Sq4VK3dp",
+
 		reward: 1234,
 		penalty: 100,
 		nrOfApplicants: 3,
@@ -38,6 +41,8 @@ const projects = [
 		shortDescription:
 			"ou can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:transition-all to apply the transition-all utility at only medium screen sizes and above.",
 		requirementsDocumentCID: "Qmba4dwS9THKQCrBSXHLYhH9eKyTCAfxZmjztu1keLpgD6",
+		nftCID: "QmNjyhvpfxWFGPSja3vMsKE5bUAtvsgzBRgRN4Sq4VK3dp",
+
 		reward: 1234,
 		penalty: 100,
 		nrOfApplicants: 3,
@@ -77,8 +82,8 @@ const projects = [
 export const Projects = () => {
 	return (
 		<div className=" mx-auto bg-gradient-to-b from-color-bg to-footer-color w-full flex flex-col items-center  ">
-			<Header className=" " />
-
+			<Header />
+			<button className="bg-color-logo"> My projects</button>
 			<ProjectList projects={projects}></ProjectList>
 		</div>
 	);

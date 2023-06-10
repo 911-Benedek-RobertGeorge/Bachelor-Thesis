@@ -1,16 +1,57 @@
 import React, { useState } from "react";
-//import { Datepicker, Input, initTE } from "tw-elements";
+import { getTokenContract, getContract, getWeb3, getAccount, getContractAddress } from "../utils/contractHelpers";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-//InitTE({ Datepicker, Input });
+
 export const ProjectForm = () => {
-	const [date, setDate] = useState(new Date());
-	const handleDateChange = (date) => {
-		// Handle date change here
-		setDate(date);
-		console.log(date);
+	const [success, setSuccess] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+
+	const [shortDescription, setShortDescription] = useState("");
+	const [requirementsDocumentCID, setRequirementsDocumentCID] = useState("");
+	const [NFTCID, setNFTCID] = useState("");
+
+	const [reward, setReward] = useState(0);
+	const [penalty, setPenalty] = useState(0);
+	const [deadline, setDeadline] = useState(0);
+	const handleDeadline = (date) => {
+		setDeadline(date);
 	};
+
+	const createProject = async () => {
+		console.log("START CREATE");
+		setLoading(true);
+		try {
+			const tokenContract = await getTokenContract();
+			const contract = await getContract();
+			console.log(tokenContract);
+			const account = await getAccount();
+			console.log(account);
+			const giveAllowanceTx = await tokenContract.methods.approve(getContractAddress(), reward).send({
+				from: account,
+			});
+			console.log("THE TX for allowance");
+			console.log(giveAllowanceTx);
+			const tx = await contract.methods
+				.createProject(shortDescription, requirementsDocumentCID, NFTCID, reward, penalty, Math.floor(deadline / 1000))
+				.send({
+					from: account,
+				});
+
+			///await tx.wait();
+			console.log("THE TX ");
+			console.log(tx);
+			setSuccess(true);
+			console.log("Transaction hash:", tx.transactionHash);
+			console.log("Project created successfully!");
+		} catch (error) {
+			setError("Error creating project:", error);
+		}
+		setLoading(false);
+	};
+
 	return (
 		<div>
 			<div class="relative min-h-screen  grid  ">
@@ -22,6 +63,7 @@ export const ProjectForm = () => {
 									<div className=" flex flex-col space-y-4 ">
 										<label class="font-bold text-lg text-white  ">Project description CID</label>
 										<input
+											onChange={(e) => setRequirementsDocumentCID(e.target.value)}
 											type="text"
 											formControlName="projectCID"
 											placeholder="Project description CID"
@@ -29,6 +71,7 @@ export const ProjectForm = () => {
 										></input>
 										<label class="font-bold text-lg text-white  ">NFT image CID</label>
 										<input
+											onChange={(e) => setNFTCID(e.target.value)}
 											type="text"
 											formControlName="nftCID"
 											placeholder="NFT image CID"
@@ -39,6 +82,7 @@ export const ProjectForm = () => {
 											Short Description
 										</label>
 										<textarea
+											onChange={(e) => setShortDescription(e.target.value)}
 											id="description"
 											maxlength="250"
 											rows="5"
@@ -49,40 +93,35 @@ export const ProjectForm = () => {
 									<div class="flex flex-col md:ml-8 space-y-4  ">
 										<label class="font-bold text-lg text-white ">Reward</label>
 										<input
+											onChange={(e) => setReward(e.target.value)}
 											type="number"
 											placeholder="Amount in WorkShare Token"
-											class="border rounded-lg py-3 px-3 mt-4 bg-black  border-color-logo placeholder-white-500 text-white"
+											className="border rounded-lg py-3 px-3 mt-4 bg-black  border-color-logo placeholder-white-500 text-white"
 										></input>
 										<label class="font-bold text-lg text-white ">Penalty</label>
 										<input
+											onChange={(e) => setPenalty(e.target.value)}
 											type="number"
 											placeholder="Penalty in WorkShare Token"
-											class="border rounded-lg py-3 px-3 mt-4 bg-black  border-color-logo placeholder-white-500 text-white"
+											className="border rounded-lg py-3 px-3 mt-4 bg-black  border-color-logo placeholder-white-500 text-white"
 										></input>
 										<label className="font-bold text-lg text-white ">Deadline</label>
 										<DatePicker
-											selected={new Date()} // Set initial selected date here
-											onChange={handleDateChange} // Handle date change callback
+											className="w-full border rounded-lg py-3 px-3  bg-black  border-color-logo placeholder-white-500 text-white"
+											selected={deadline}
+											onChange={handleDeadline}
+											dateFormat="dd-MM-yyyy"
 										/>
-										<div class="relative mb-3" data-te-datepicker-init data-te-input-wrapper-init>
-											<input
-												type="text"
-												class="peer block min-h-[auto] w-full rounded border-0 bg-white px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-												placeholder="Select a date"
-											/>
-											<label
-												for="floatingInput"
-												class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-											>
-												Select a date
-											</label>
-										</div>
+
 										<div class="flex-grow"></div>
+
 										<button
 											className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
 											routerLink="/projects"
+											onClick={createProject}
+											disabled={loading}
 										>
-											Create Project
+											{loading ? "Loading..." : "Create Project"}
 										</button>
 									</div>
 								</div>
@@ -91,6 +130,8 @@ export const ProjectForm = () => {
 					</div>
 				</div>
 			</div>
+			{success && <p className="text-green">Project successfully created</p>}
+			{error && <p className="text-red">error</p>}
 		</div>
 	);
 };
