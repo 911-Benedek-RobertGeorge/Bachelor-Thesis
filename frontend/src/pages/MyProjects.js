@@ -34,20 +34,6 @@ export const MyProjects = () => {
 		console.log("CALL USE EFFECT ");
 	}, []);
 
-	const getRole = async () => {
-		try {
-			account = await getAccount();
-
-			const result = 1; //await contract.methods;
-			//console.log("Transaction hash:", result.transactionHash);
-			console.log("GET ROLE : ");
-			setSuccess(true);
-		} catch (e) {
-			setError("An error occurred while registering your email" + e);
-		}
-
-		setLoading(false);
-	};
 	const getProjects = async () => {
 		try {
 			console.log("start get projects ");
@@ -56,7 +42,7 @@ export const MyProjects = () => {
 			console.log("CONTRACT: ", contract);
 			console.log("ACCOUNT : ");
 			console.log(account);
-			const result = await contract.methods.getOpenProjects().call();
+			const result = await contract.methods.getMyProjectsAdmin().call({ from: account });
 			console.log("The resul is :  ");
 			console.log(result);
 			//console.log(result._method);
@@ -93,11 +79,7 @@ export const MyProjects = () => {
 	};
 
 	return (
-		<div className="mx-auto bg-gradient-to-b from-color-bg to-footer-color w-full flex flex-col items-center">
-			<Header />
-			<button onClick={getProjects} className="border-2 border-color-white">
-				{loading ? "Loading..." : "Get Projects"}
-			</button>
+		<div className="mx-auto bg-gradient-to-b from-footer-color  to-color-bg w-full flex flex-col items-center">
 			<ProjectList projects={projectList}></ProjectList>
 		</div>
 	);

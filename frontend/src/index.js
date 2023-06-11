@@ -26,7 +26,7 @@ root.render(
 				<Route path="/project" element={<Project />} />
 				<Route path="/project-form" element={<CreateProject />} />
 				<Route path="/my-projects" element={<MyProjects />} />
-				<Route path="/my-page" element={<MyPage />} />
+				<Route path="/personal" element={<MyPage />} />
 
 				<Route path="/contact" element={<MyProjects />} />
 			</Routes>
