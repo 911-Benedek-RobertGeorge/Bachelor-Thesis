@@ -14,8 +14,10 @@ let tokenContract = undefined;
 
 const getWeb3 = async () => {
 	// Modern dapp browsers
+	console.log("GET Web3");
 	if (web3 !== undefined) return web3;
 	if (window.ethereum) {
+		console.log("Compute Web3");
 		web3 = new Web3(window.ethereum);
 		try {
 			// Request account access if needed
@@ -44,7 +46,10 @@ const getWeb3 = async () => {
 
 const getContract = async () => {
 	try {
+		console.log("GET Contract");
 		if (contract === undefined) {
+			console.log("Compute Contract");
+
 			web3 = await getWeb3();
 			contract = new web3.eth.Contract(abi, contractAddress);
 		}
@@ -86,4 +91,8 @@ const getAccount = async () => {
 	return account;
 };
 
-export { getWeb3, getContract, getTokenContract, getContractAddress, getContractABI, getAccount };
+const checkIfAddress = async (address) => {
+	return await web3.utils.isAddress(address);
+};
+
+export { checkIfAddress, getWeb3, getContract, getTokenContract, getContractAddress, getContractABI, getAccount };

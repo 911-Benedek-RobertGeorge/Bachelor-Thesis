@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getContractAddress, getContractABI, getContract, getWeb3, getAccount } from "../utils/contractHelpers";
+import { getContract, getAccount } from "../utils/contractHelpers";
 import { Header } from "../containers/Header";
 import ProjectList from "../components/ProjectList";
 
@@ -79,7 +79,8 @@ export const MyProjects = () => {
 	};
 
 	return (
-		<div className="mx-auto bg-gradient-to-b from-footer-color  to-color-bg w-full flex flex-col items-center">
+		<div className=" flex flex-col items-center">
+			<h1 className="text-white"> My Projects List</h1>
 			<ProjectList projects={projectList}></ProjectList>
 		</div>
 	);

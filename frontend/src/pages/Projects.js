@@ -112,6 +112,7 @@ export const Projects = () => {
 			);
 
 			setProjectList(formattedProjects);
+			console.log("RES" + result);
 		} catch (e) {
 			setError("An error occurred while fetching the data" + e);
 			console.log(error);
@@ -121,8 +122,7 @@ export const Projects = () => {
 	return (
 		<div className=" mx-auto bg-gradient-to-b from-color-bg to-footer-color w-full flex flex-col items-center  ">
 			<Header />
-			<button className="bg-color-logo"> My projects</button>
-			{error && <p> error</p>}
+
 			<ProjectList projects={projectList}></ProjectList>
 		</div>
 	);
