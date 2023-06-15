@@ -28,7 +28,7 @@ contract WorkShare is Initializable, Ownable {
     //the users emails are safe because there is no way to iterate through the mapping
     mapping (address => string) private developers; 
     
-    // managers, Users that can create contracts
+    // managers, Users that can create projects
     mapping (address => bool) admins;
     
     // index to project mapping 
@@ -256,8 +256,8 @@ contract WorkShare is Initializable, Ownable {
 
     function withdrawCommision() public onlyOwner{
         require(totalCommission > 0, "No commission available for withdrawal.");
-        require(workShareToken.transfer(msg.sender, totalCommission), "The transfer of commission tokens failed.");
         totalCommission = 0;
+        require(workShareToken.transfer(msg.sender, totalCommission), "The transfer of commission tokens failed.");
     }
  
 } 

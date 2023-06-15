@@ -3,11 +3,12 @@
 pragma solidity >=0.8.0 <0.9.0; // handles the overflow 
 import './IERC20.sol';
   
-contract WorkShareToken is IERC20 {
+contract WorkShareToken is IERC20 { 
  
     uint public supply;
     address payable public founder;
-    uint public tokenPrice = 1000; 
+    uint public tokenPrice = 1000; // change price
+     
 
     mapping (address => uint) private balances;
     mapping (address => mapping(address => uint)) allowed;
@@ -55,10 +56,10 @@ contract WorkShareToken is IERC20 {
     }
 
 
-    function approve(address spender, uint   tokens) public override returns (bool success){
+    function approve(address spender, uint tokens) public override returns (bool success){
         require(balances[msg.sender] >= tokens);
         require(tokens > 0);
-        allowed[msg.sender][spender] = tokens;
+        allowed[msg.sender][spender] += tokens;
 
         emit Approval(msg.sender, spender, tokens);
 
