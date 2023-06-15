@@ -36,9 +36,6 @@ export const Header = () => {
 						{" "}
 						<Link to="/personal">Personal</Link>
 					</li>
-					<li>
-						<Link to="/contact">Contact</Link>
-					</li>
 				</ul>
 				<MenuItems showMenu={showMenu} active={active} />
 			</nav>

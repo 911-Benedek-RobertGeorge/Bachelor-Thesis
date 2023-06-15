@@ -11,6 +11,7 @@ export const MyPage = () => {
 	const [developer, setDeveloper] = useState(false);
 	const [balance, setBalance] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [projectNumber, setProjectNumber] = useState(-1);
 
 	useEffect(() => {
 		getRole();
@@ -41,6 +42,16 @@ export const MyPage = () => {
 			console.log(error);
 		}
 	};
+
+	const applyToProject = async () => {
+		try {
+			const contract = await getContract();
+			const account = await getAccount();
+			await contract.methods.applyForProject(projectNumber).send({ from: account });
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<div className=" flex flex-col bg-gradient-to-b from-color-bg to-footer-color   items-center space-y-8 ">
 			<Header />
@@ -49,8 +60,25 @@ export const MyPage = () => {
 
 			{owner && <OwnerSection />}
 			{manager && <ManagerSection />}
-			<div> 
+			{!manager && !owner && <p>AICI PUNE developer</p>}
+			<div className="flex flex-col space-y-4">
+				<label class="font-bold text-lg text-white">Apply to Project</label>
+				<input
+					type="number"
+					onChange={(e) => setProjectNumber(e.target.value)}
+					placeholder="Project number"
+					class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+				></input>
+				<button
+					className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
+					routerLink="/projects"
+					onClick={applyToProject}
+					disabled={loading}
+				>
+					{loading ? "Loading..." : "Apply"}
+				</button>
 
+				<div className="flex flex-span"></div>
 			</div>
 			<MyProjects />
 		</div>

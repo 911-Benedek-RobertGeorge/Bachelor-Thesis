@@ -122,7 +122,6 @@ export const Projects = () => {
 	return (
 		<div className=" mx-auto bg-gradient-to-b from-color-bg to-footer-color w-full flex flex-col items-center  ">
 			<Header />
-
 			<ProjectList projects={projectList}></ProjectList>
 		</div>
 	);
