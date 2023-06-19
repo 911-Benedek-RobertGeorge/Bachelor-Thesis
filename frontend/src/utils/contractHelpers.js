@@ -6,7 +6,6 @@ const tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
 const { abi } = require("../contracts/WorkShare.json");
 const { tokenAbi } = require("../contracts/WorkShareToken.json");
 
-//console.log("THE ABI " + abi);
 let account = "";
 let web3 = undefined;
 let contract = undefined;
@@ -88,6 +87,7 @@ const getAccount = async () => {
 		const accounts = await web3.eth.getAccounts();
 		account = accounts[0];
 	}
+	console.log("CURRENT ACCOUNT : " + account);
 	return account;
 };
 
@@ -95,4 +95,8 @@ const checkIfAddress = async (address) => {
 	return await web3.utils.isAddress(address);
 };
 
-export { checkIfAddress, getWeb3, getContract, getTokenContract, getContractAddress, getContractABI, getAccount };
+const getPrice = async () => {
+	return await tokenContract.methods.tokenPrice().call();
+};
+
+export { getPrice, checkIfAddress, getWeb3, getContract, getTokenContract, getContractAddress, getContractABI, getAccount };

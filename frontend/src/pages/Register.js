@@ -23,7 +23,6 @@ export const Register = () => {
 				<div className=" place-self-start flex p-10  md:col-span-3 ">
 					<GetMail />
 				</div>
-				<div className=" md:col-span-5">FOOTER</div>
 			</div>
 		</div>
 	);

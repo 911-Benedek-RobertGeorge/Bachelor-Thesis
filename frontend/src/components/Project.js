@@ -5,28 +5,35 @@ import nft from "../assets/cool-dev.png";
 
 import { getContract, getAccount } from "../utils/contractHelpers";
 
-const Project = ({ project }) => {
+const Project = ({ project, showApplyButton }) => {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [isAlertVisible, setIsAlertVisible] = useState(false);
+	const [error, setError] = useState(false);
 
 	const showMessage = () => {
 		setIsAlertVisible(true);
 
-		// setTimeout(() => {
-		// 	setIsAlertVisible(false);
-		// }, 3000);
+		setTimeout(() => {
+			setIsAlertVisible(false);
+		}, 4000);
 	};
 
 	const handleApply = async () => {
 		setLoading(true);
-		console.log(loading);
+		setSuccess(false);
+		setError(false);
+
 		try {
 			const Contract = await getContract();
 			const account = await getAccount();
+			console.log("THE ACC : " + account);
 			await Contract.methods.applyForProject(project.id).send({ from: account });
 			setSuccess(true);
+			showMessage();
 		} catch (error) {
+			setError(true);
+			showMessage();
 			console.error(error);
 		}
 		setLoading(false);
@@ -78,13 +85,17 @@ const Project = ({ project }) => {
 					</div>
 				</a>
 			</div>
-			{success && <p className="text-green-600 font-bold">You have successfully applied to this project!</p>}
-			<button
-				onClick={handleApply}
-				className="z-10 mt-8 flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-r from-cyan-500 to-cyan-700"
-			>
-				<p className=" justify-center text-sm">{loading ? "Loading" : "Apply"}</p>
-			</button>
+			{isAlertVisible && success && <p className="text-green-600 font-bold">You have successfully applied to this project!</p>}
+			{isAlertVisible && error && <p className="text-red-600 font-bold">There was an error.</p>}
+
+			{showApplyButton && (
+				<button
+					onClick={handleApply}
+					className="z-10 mt-8 flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-r from-cyan-500 to-cyan-700"
+				>
+					<p className=" justify-center text-sm">{loading ? "Loading" : "Apply"}</p>
+				</button>
+			)}
 		</div>
 	);
 };

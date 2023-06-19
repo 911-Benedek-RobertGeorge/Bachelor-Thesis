@@ -26,6 +26,20 @@
 	-webkit-text-fill-color: transparent;
 }
 
+.spoiler {
+	color: transparent;
+	background-position: right;
+	background-size: 100% 100%;
+	background-image: linear-gradient(#741cc5, #3e57e9);
+	display: inline;
+	background-repeat: no-repeat;
+	transition: all 500ms ease-in-out;
+}
+.spoiler:hover {
+	color: #ffffff;
+	background-size: 0% 100%;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
