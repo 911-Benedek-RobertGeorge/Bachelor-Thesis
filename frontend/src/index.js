@@ -8,7 +8,6 @@ import { Register } from "./pages/Register";
 import { Home } from "./pages/Home";
 import { Carousel, initTE } from "tw-elements";
 import { Projects } from "./pages/Projects";
-import { Contact } from "./pages/Contact";
 import Project from "./components/Project";
 import { CreateProject } from "./pages/CreateProject";
 import { MyProjects } from "./pages/MyProjects";
@@ -27,8 +26,6 @@ root.render(
 				<Route path="/personal/project-form" element={<CreateProject />} />
 				<Route path="/my-projects" element={<MyProjects />} />
 				<Route path="/personal" element={<MyPage />} />
-
-				<Route path="/contact" element={<MyProjects />} />
 			</Routes>
 		</Router>
 	</Web3ReactProvider>

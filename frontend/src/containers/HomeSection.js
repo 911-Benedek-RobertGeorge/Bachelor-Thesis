@@ -2,14 +2,12 @@ import React from "react";
 import ConnectButton from "../components/ConnectWallet";
 import { Header } from "./Header";
 import { NftShowOff } from "../components/NftShowOff";
-import logo from "../assets/logo2.png";
 import { TokenShowOff } from "../components/TokenShowOff";
-///https://codepen.io/32teeth/pen/QvyxKZ nfts
 
 export const HomeSection = () => {
 	return (
 		<div>
-			{" "}
+		 
 			<div className="place-self start snap-y scroll-smooth  snap-mandatory h-screen w-screen overflow-scroll">
 				<div className=" select-none snap-start  flex flex-col items-center bg-home-image w-full h-screen bg-cover bg-bottom flex items-center px-4">
 					<Header />
@@ -27,8 +25,9 @@ export const HomeSection = () => {
 						Do you want to collaborate with innovative companies and have access to a diverse range of projects that match your interests and
 						abilities?
 					</div>
+					<div className="col-span-8	"></div>
 					<div className="col-span-2"></div>
-					<div className="col-span-4  ">
+					<div className="col-span-4 mt-[-20%] ">
 						<h2 className="text-center">Spoiler alert!</h2>
 						<h5 className="text-center">(Hover to reveal)</h5>
 						<p className="spoiler  ">
@@ -38,11 +37,6 @@ export const HomeSection = () => {
 							skills, connect with global opportunities, and maximize their income potential.
 						</p>
 					</div>
-					<div className="col-span-3 ">
-						Do you require specialized skills and expertise that may not be readily available within your immediate vicinity?
-					</div>
-					<div className="col-span-2"></div>
-					<div className="col-span-3 place-self-start">Do you want to maximize your income potential and reduce your tax obligations </div>
 				</div>
 				<div className="flex flex-col justify-bottom text-white snap-start bg-playful-hand-image w-full h-screen bg-cover bg-bottom   items-center px-4">
 					<NftShowOff />

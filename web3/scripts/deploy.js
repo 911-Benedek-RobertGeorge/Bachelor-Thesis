@@ -3,7 +3,8 @@ const hre = require("hardhat");
 const API_KEY = process.env.API_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
-
+const tokenAddress = process.env.TOKEN_ADDRESS;
+//0x494f131da2641dd0613118da379ea201b995e066;
 const contractJson = require("../artifacts/contracts/WorkShare.sol/WorkShare.json");
 
 console.log("Provider : ");
@@ -24,16 +25,16 @@ async function main() {
 	const workShareContract = await WorkShareFactory.deploy();
 	console.log("Contract WorkShare deployed to address:", workShareContract.address);
 
-	const WorkShareTokenFactory = await ethers.getContractFactory("WorkShareToken");
-	const workShareTokenContract = await WorkShareTokenFactory.deploy();
-	console.log("Contract WorkShareToken deployed to address:", workShareTokenContract.address);
+	// const WorkShareTokenFactory = await ethers.getContractFactory("WorkShareToken");
+	// const workShareTokenContract = await WorkShareTokenFactory.deploy();
+	// console.log("Contract WorkShareToken deployed to address:", workShareTokenContract.address);
 
 	// const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
 	// const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
 	// console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
 
 	//initialize(token address,commission, nft address)
-	const tx = await workShareContract.initialize(workShareTokenContract.address, 5);
+	const tx = await workShareContract.initialize(tokenAddress, 5);
 	await tx.wait();
 	console.log(tx);
 }

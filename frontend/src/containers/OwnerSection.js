@@ -23,35 +23,45 @@ export const OwnerSection = () => {
 
 	const grantManagerRole = async () => {
 		try {
+			setLoading(true);
 			if (!(await checkIfAddress(grantRoleAddress))) {
 				setError("Invalid Address!");
 			} else {
 				setError("");
 				await contract.methods.grantAdminRole(grantRoleAddress).send({ from: account });
 			}
+			setLoading(false);
 		} catch (error) {
 			console.log(error);
 		}
 	};
 	const changeManagerOfProject = async () => {
-		try {
+			setLoading(true);
+			try {
+		
 			await contract.methods.changeManagerOfProject(projectNumber, newManagerAddress).send({ from: account });
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 	const revokeManagerRole = async () => {
+		setLoading(true);
 		try {
+			
+
 			if (!(await checkIfAddress(revokeRoleAddress))) {
 				setError("Invalid Address!");
 			} else {
 				setError("");
 				await contract.methods.grantAdminRole(grantRoleAddress).send({ from: account });
 				setSuccess(true);
+				
 			}
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	return (

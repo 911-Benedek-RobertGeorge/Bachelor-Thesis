@@ -60,8 +60,6 @@ export const ManagerSection = () => {
 		try {
 			const tx = await contract.methods.finalizeProject(projectNumberFinalize).send({ from: account });
 
-			console.log("TRASNSACTION HASH : " + tx.hash);
-
 			setTxHash(tx.hash);
 			await tx.wait();
 			setSuccess(true);
@@ -75,13 +73,9 @@ export const ManagerSection = () => {
 	const projectNotCompleted = async () => {
 		setSuccess(false);
 		setError(false);
-
 		setLoading(true);
 		try {
 			const tx = await contract.methods.projectNotCompleted(projectNumberFinalize, effort).send({ from: account });
-
-			console.log("TRASNSACTION HASH : " + tx.hash);
-
 			setTxHash(tx.hash);
 			await tx.wait();
 			setSuccess(true);
@@ -193,23 +187,7 @@ export const ManagerSection = () => {
 						{loading ? "Loading..." : "Accept "}
 					</button>
 				</div>
-				<div className="flex flex-col space-y-4">
-					<label class="font-bold text-lg text-white">Finalize project</label>
-					<input
-						type="number"
-						onChange={(e) => setprojectNumberFinalize(e.target.value)}
-						placeholder="Project number"
-						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
-					></input>
-					<button
-						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
-						routerLink="/projects"
-						onClick={finalizeProject}
-						disabled={loading}
-					>
-						{loading ? "Loading..." : "Finalize"}
-					</button>
-				</div>
+
 				<div>
 					<Link to="project-form">
 						<button
@@ -230,8 +208,24 @@ export const ManagerSection = () => {
 			</div>
 			<div className="flex mt-8">
 				{applicantsList && <ApplicantsList applicantsList={applicantsList} />}
-
-				<div className="flex flex-col space-y-4 max-w-xs">
+				<div className="flex flex-col space-y-4">
+					<label class="font-bold text-lg text-white">Finalize project</label>
+					<input
+						type="number"
+						onChange={(e) => setprojectNumberFinalize(e.target.value)}
+						placeholder="Project number"
+						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+					></input>
+					<button
+						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
+						routerLink="/projects"
+						onClick={finalizeProject}
+						disabled={loading}
+					>
+						{loading ? "Loading..." : "Finalize"}
+					</button>
+				</div>
+				<div className="flex flex-col space-x-4 space-y-4 max-w-xs">
 					<label class="font-bold text-lg text-white">Uncompleted project</label>
 					<input
 						type="number"
@@ -251,7 +245,7 @@ export const ManagerSection = () => {
 							onClick={projectNotCompleted}
 							disabled={loading}
 						>
-							{loading ? "Loading..." : "Not completed"}
+							{loading ? "Loading..." : "Incomplete"}
 						</button>
 					</div>
 				</div>

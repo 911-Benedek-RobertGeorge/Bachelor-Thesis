@@ -10,7 +10,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract WorkShare is Initializable, Ownable { 
     // ERC20 token used for rewarding developers
     IERC20 public workShareToken;
-   
 
     // Total number of developers
     uint32 public nrOfDevelopers;
@@ -25,7 +24,7 @@ contract WorkShare is Initializable, Ownable {
     uint public totalCommission;
 
     // mapping for registered developers, address to email, 
-    //the users emails are safe because there is no way to iterate through the mapping
+    // the users emails are safe because there is no way to iterate through the mapping
     mapping (address => string) private developers; 
     
     // managers, Users that can create projects
@@ -72,10 +71,7 @@ contract WorkShare is Initializable, Ownable {
         return projects[projectNumber].applicants;
     } 
 
-    function getStringLenght(string memory str) public pure returns(uint256) {
-        bytes memory tempEmptyStringTest = bytes(str); // Uses memory
-        return tempEmptyStringTest.length;
-    }
+   
     
     //should  the person to apply necceserily or the admin can name it even if not from applications ? 
     function acceptApplication(uint32 _nrOfProject, address _applicant) public onlyAdmin {
@@ -133,7 +129,7 @@ contract WorkShare is Initializable, Ownable {
             finalReward = uint(project.reward / 5);
             require(workShareToken.transfer(project.acceptedDeveloper, finalReward),"The transfer of the reward failed");
         }
-         // send back the tokens to the project manager
+        // send back the tokens to the project manager
         require(workShareToken.transfer(msg.sender,project.reward - finalReward),"Transfering back the tokens of the not completed project failed.");
         project.state = State.FAILED;
     }
@@ -192,10 +188,12 @@ contract WorkShare is Initializable, Ownable {
    // GETTERS
     function getOpenProjects() public view returns(Project[] memory){
         Project[] memory projectList = new Project[](nrOfProjects); 
+        uint j = 0;
         for(uint32 i = 0; i < nrOfProjects; ++i){
             if(projects[i].state == State.OPEN)
                 {
-                    projectList[i] = projects[i];
+                    projectList[j] = projects[i];
+                    ++j;
                 }
         }
         return projectList;
@@ -204,51 +202,7 @@ contract WorkShare is Initializable, Ownable {
     function getEmailOfDeveloper(address _address) public view onlyAdmin returns(string memory) {
         return developers[_address];
     }
-
-   function getMyProjectsDev() public view returns (Project[] memory) {
-    uint32 count = 0;
-    for (uint32 i = 0; i < nrOfProjects; ++i) {
-        if (projects[i].acceptedDeveloper == msg.sender) {
-            count++;
-        }
-    }
-
-    Project[] memory result = new Project[](count);
-    uint32 j = 0;
-    for (uint32 i = 0; i < nrOfProjects; ++i) {
-        if (projects[i].acceptedDeveloper == msg.sender) {
-            result[j] = projects[i];
-            j++;
-        }
-    }
-
-    return result;
-}
-    // returns the list of projects of a specific Admin
-    function getMyProjectsAdmin() public view onlyAdmin returns (Project[] memory) {
-     uint32 count = 0;
-    Project[] memory result;
-
-    for (uint32 i = 0; i < nrOfProjects; i++) {
-        if (projects[i].manager == msg.sender) {
-            count++;
-        }
-    }
-
-    if (count > 0) {
-        result = new Project[](count);
-        uint32 j = 0;
-
-        for (uint32 i = 0; i < nrOfProjects && j < count; i++) {
-            if (projects[i].manager == msg.sender) {
-                result[j++] = projects[i];
-            }
-        }
-    }
-
-    return result;
-    }
-
+ 
     // returns the balance of WST that the caller has
     function getMyBalance() public view returns(uint){
         return workShareToken.balanceOf(msg.sender);

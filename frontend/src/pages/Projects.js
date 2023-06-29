@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../containers/Header";
-import Project from "../components/Project";
 import ProjectList from "../components/ProjectList";
-import { getContract, getAccount } from "../utils/contractHelpers";
+import { getContract } from "../utils/contractHelpers";
 
 export const Projects = () => {
 	function ProjectDto(id, reward, penalty, deadline, shortDescription, requirementsDocumentCID, nftCID) {
@@ -44,7 +43,6 @@ export const Projects = () => {
 			);
 
 			setProjectList(formattedProjects);
-			 
 		} catch (e) {
 			setError("An error occurred while fetching the data" + e);
 			console.log(error);

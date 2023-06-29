@@ -7,26 +7,25 @@ contract WorkShareToken is IERC20 {
  
     uint public supply;
     address payable public founder;
-    uint public tokenPrice = 1000; // change price
+    uint public tokenPrice = 10 ** 15; 
      
 
     mapping (address => uint) private balances;
     mapping (address => mapping(address => uint)) allowed;
  
+
     constructor()  {
         supply = 0;
         founder = payable(msg.sender);
     }
 
-    // returns the balance of the msg.sender
-    function balanceOf(address   tokenOwner) public view override returns (uint balance){
+     function balanceOf(address   tokenOwner) public view override returns (uint balance){
         require(msg.sender == tokenOwner, "You can only see your balance");
         return balances[tokenOwner];
     }
 
      function decimals() public view virtual returns (uint8){
          return 1;
-
      }
 
     function symbol() public view virtual returns (string memory) {
@@ -54,7 +53,6 @@ contract WorkShareToken is IERC20 {
     function allowance(address   tokenOwner, address   spender) view public override returns (uint){
         return allowed[tokenOwner][spender];
     }
-
 
     function approve(address spender, uint tokens) public override returns (bool success){
         require(balances[msg.sender] >= tokens);
@@ -91,27 +89,15 @@ contract WorkShareToken is IERC20 {
 
       return true;
     }
-
-    
-    function mintFromContract(address sender, uint value) public returns(bool){
-      
-      uint tokens = value / tokenPrice;
-      supply += tokens;
-      balances[sender] += tokens;
-
-      emit Mint(sender, value, tokens);
-
-      return true;
-    }
-    
+ 
     // withdraw the tokens you have
     function withdraw(uint tokens) public override returns (bool){
-        require (balances[msg.sender] >= tokens, "Not enough balance!");
+        require (balances[msg.sender] >= tokens, "Not enough balance!"); 
 
         uint value = tokens * tokenPrice ;
+        payable(msg.sender).transfer(value);
         supply -= tokens;
         balances[msg.sender] -= tokens;
-        payable(msg.sender).transfer(value);
 
         return true;
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../containers/Header";
-import { getPrice, getContract, getWeb3, getAccount, getTokenContract } from "../utils/contractHelpers";
+import { getPrice, getContract, getAccount, getTokenContract } from "../utils/contractHelpers";
 import { ManagerSection } from "../containers/ManagerSection";
 import { MyProjects } from "./MyProjects";
 import { OwnerSection } from "../containers/OwnerSection";
@@ -19,6 +19,7 @@ export const MyPage = () => {
 	}, []);
 
 	const getRole = async () => {
+		setLoading(true);
 		try {
 			const contract = await getContract();
 			const account = await getAccount();
@@ -33,6 +34,7 @@ export const MyPage = () => {
 				try {
 					//call this function to see if the connected account is an ADMIN
 					await contract.methods.getEmailOfDeveloper(account).call({ from: account });
+
 					setManager(true);
 				} catch (e) {
 					console.log(e);
@@ -42,9 +44,11 @@ export const MyPage = () => {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	const buyToken = async () => {
+		setLoading(true);
 		try {
 			const tokenContract = await getTokenContract();
 			const account = await getAccount();
@@ -56,9 +60,11 @@ export const MyPage = () => {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	const sellToken = async () => {
+		setLoading(true);
 		try {
 			const tokenContract = await getTokenContract();
 			const account = await getAccount();
@@ -69,9 +75,11 @@ export const MyPage = () => {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	const applyToProject = async () => {
+		setLoading(true);
 		try {
 			const contract = await getContract();
 			const account = await getAccount();
@@ -79,6 +87,7 @@ export const MyPage = () => {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 	return (
 		<div className=" flex flex-col bg-gradient-to-b from-color-bg to-footer-color   items-center space-y-8 ">
@@ -129,7 +138,8 @@ export const MyPage = () => {
 
 				<div className="flex flex-span"></div>
 			</div>
-			<MyProjects />
+			{manager && <MyProjects manager={manager} />}
+			{developer && <MyProjects manager={manager} />}
 		</div>
 	);
 };

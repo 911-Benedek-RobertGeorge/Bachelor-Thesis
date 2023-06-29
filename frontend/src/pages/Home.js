@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Header } from "../containers/Header";
+import React from "react";
 import { HomeSection } from "../containers/HomeSection";
 
 export const Home = () => {

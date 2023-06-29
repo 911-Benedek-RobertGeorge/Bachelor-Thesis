@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getTokenContract, getContract, getWeb3, getAccount, getContractAddress } from "../utils/contractHelpers";
+import { getTokenContract, getContract, getAccount, getContractAddress } from "../utils/contractHelpers";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
@@ -8,6 +8,16 @@ export const ProjectForm = () => {
 	const [success, setSuccess] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+
+	const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+	const showMessage = () => {
+		setIsAlertVisible(true);
+
+		setTimeout(() => {
+			setIsAlertVisible(false);
+		}, 4000);
+	};
 
 	const [shortDescription, setShortDescription] = useState("");
 	const [requirementsDocumentCID, setRequirementsDocumentCID] = useState("");
@@ -21,35 +31,23 @@ export const ProjectForm = () => {
 	};
 
 	const createProject = async () => {
-		console.log("START CREATE");
 		setLoading(true);
 		try {
 			const tokenContract = await getTokenContract();
 			const contract = await getContract();
-			console.log(tokenContract);
 			const account = await getAccount();
-			console.log(account);
-
-			// const buyTokensTx = await tokenContract.methods.mint().send({ from: account, value: 100000000000000000 });
-			// console.log(buyTokensTx);
-
 			const giveAllowanceTx = await tokenContract.methods.approve(getContractAddress(), reward).send({
 				from: account,
 			});
-			console.log("THE TX for allowance");
-			console.log(giveAllowanceTx);
+
 			const tx = await contract.methods
 				.createProject(shortDescription, requirementsDocumentCID, NFTCID, reward, penalty, Math.floor(deadline / 1000))
 				.send({
 					from: account,
 				});
 
-			///await tx.wait();
-			console.log("THE TX ");
-			console.log(tx);
 			setSuccess(true);
-			console.log("Transaction hash:", tx.transactionHash);
-			console.log("Project created successfully!");
+			showMessage();
 		} catch (error) {
 			setError("Error creating project:", error);
 		}
@@ -59,6 +57,7 @@ export const ProjectForm = () => {
 	return (
 		<div>
 			<div class="relative min-h-screen  grid  ">
+				{isAlertVisible && success && <p className="text-green">Project successfully created</p>}
 				<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 ">
 					<div class=" w-full space-y-12">
 						<div class="lg:text-left text-center">
@@ -134,7 +133,7 @@ export const ProjectForm = () => {
 					</div>
 				</div>
 			</div>
-			{success && <p className="text-green">Project successfully created</p>}
+			{isAlertVisible && success && <p className="text-green">Project successfully created</p>}
 			{error && <p className="text-red">error</p>}
 		</div>
 	);

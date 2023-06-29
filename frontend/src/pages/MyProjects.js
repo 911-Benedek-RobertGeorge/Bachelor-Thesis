@@ -3,7 +3,7 @@ import { getContract, getAccount } from "../utils/contractHelpers";
 import { Header } from "../containers/Header";
 import ProjectList from "../components/ProjectList";
 
-export const MyProjects = () => {
+export const MyProjects = ({ manager }) => {
 	function ProjectDto(id, nrOfApplicants, reward, penalty, deadline, shortDescription, requirementsDocumentCID, nftCID) {
 		this.id = id;
 		this.nrOfApplicants = nrOfApplicants;
@@ -30,9 +30,13 @@ export const MyProjects = () => {
 		try {
 			const contract = await getContract();
 			const account = await getAccount();
-
-			const result = await contract.methods.getMyProjectsAdmin().call({ from: account });
-
+			var result;
+			console.log("MANAGER : " + manager);
+			if (manager) {
+				result = await contract.methods.getMyProjectsAdmin().call({ from: account });
+			} else {
+				result = await contract.methods.getMyProjectsDev().call({ from: account });
+			}
 			const formattedProjects = result.map(
 				(project) =>
 					new ProjectDto(

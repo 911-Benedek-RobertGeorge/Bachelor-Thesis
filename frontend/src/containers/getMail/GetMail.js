@@ -1,7 +1,7 @@
 import "./GetMail.css";
 import React, { useState } from "react";
 
-import { getContractAddress, getContractABI, getContract, getWeb3, getAccount } from "../../utils/contractHelpers";
+import { getContract, getAccount } from "../../utils/contractHelpers";
 
 export const GetMail = () => {
 	const [email, setEmail] = useState("");
@@ -10,12 +10,6 @@ export const GetMail = () => {
 	const [error, setError] = useState("");
 
 	const handleRegister = async () => {
-		// const theError = validate(email);
-		// if (theError !== {}) {
-		// setError(theError.email);
-		// return;
-		// }
-
 		setLoading(true);
 
 		try {
@@ -26,11 +20,9 @@ export const GetMail = () => {
 			});
 			console.log("Transaction hash:", result.transactionHash);
 
-			//const nrOfDevelopers = await contract.methods.nrOfDevelopers();
-			//console.log(nrOfDevelopers); // get the number
-
 			setSuccess(true);
 		} catch (e) {
+			console.log(e);
 			setError("An error occurred while registering your email" + e);
 		}
 
