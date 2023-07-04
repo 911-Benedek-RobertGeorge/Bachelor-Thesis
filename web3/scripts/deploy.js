@@ -2,7 +2,6 @@ const hre = require("hardhat");
 
 const API_KEY = process.env.API_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const tokenAddress = process.env.TOKEN_ADDRESS;
 //0x494f131da2641dd0613118da379ea201b995e066;
 const contractJson = require("../artifacts/contracts/WorkShare.sol/WorkShare.json");
@@ -29,14 +28,20 @@ async function main() {
 	// const workShareTokenContract = await WorkShareTokenFactory.deploy();
 	// console.log("Contract WorkShareToken deployed to address:", workShareTokenContract.address);
 
-	// const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
-	// const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
-	// console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
+	const MasteryMilestoneFactory = await ethers.getContractFactory("MasteryMilestones");
+	const masteryMilestoneContract = await MasteryMilestoneFactory.deploy();
+	console.log("Contract MasteryMilestone deployed to address:", masteryMilestoneContract.address);
 
-	//initialize(token address,commission, nft address)
-	const tx = await workShareContract.initialize(tokenAddress, 5);
+	//initialize(token address,nft contract address, commission)
+	const tx = await workShareContract.initialize(tokenAddress, masteryMilestoneContract.address, 5);
+
+	const txx = await masteryMilestoneContract.transferOwnership(workShareContract.address);
+
 	await tx.wait();
 	console.log(tx);
+
+	await txx.wait();
+	console.log(txx);
 }
 
 main()

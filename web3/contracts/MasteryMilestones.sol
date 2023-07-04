@@ -15,7 +15,7 @@ contract MasteryMilestones is ERC721URIStorage, Ownable {
         
     }
 
-    function mintNFT(address recipient, string memory tokenURI) // how can I allow only the admins to be able to mint
+    function mintNFT(address recipient, string memory tokenURI) 
         public onlyOwner
         returns (uint256)
     {

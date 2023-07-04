@@ -2,7 +2,7 @@
 
 pragma solidity >=0.8.0 < 0.9.0; /// greater than 0.8.0 to avoid overflows
 import './WorkShareToken.sol';
-//import './MasteryMilestones.sol
+import './MasteryMilestones.sol';
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract WorkShare is Initializable, Ownable { 
     // ERC20 token used for rewarding developers
     IERC20 public workShareToken;
+
+    MasteryMilestones masteryMilestones;
 
     // Total number of developers
     uint32 public nrOfDevelopers;
@@ -37,10 +39,12 @@ contract WorkShare is Initializable, Ownable {
         require(admins[msg.sender] == true, "Only admins are allowed!");
         _; 
     }
+
  
 
-    function initialize(address payable _token, uint32 _commision) public initializer onlyOwner{
+    function initialize(address payable _token, address _nft, uint32 _commision) public initializer onlyOwner{
         workShareToken = WorkShareToken(_token);
+        masteryMilestones = MasteryMilestones(_nft);
         admins[msg.sender] = true;
         require(commision < 50, "The commision has to be less than 50%.");
         commision = _commision;
@@ -188,13 +192,9 @@ contract WorkShare is Initializable, Ownable {
    // GETTERS
     function getOpenProjects() public view returns(Project[] memory){
         Project[] memory projectList = new Project[](nrOfProjects); 
-        uint j = 0;
+        
         for(uint32 i = 0; i < nrOfProjects; ++i){
-            if(projects[i].state == State.OPEN)
-                {
-                    projectList[j] = projects[i];
-                    ++j;
-                }
+            projectList[i] = projects[i];
         }
         return projectList;
     }
@@ -213,5 +213,13 @@ contract WorkShare is Initializable, Ownable {
         totalCommission = 0;
         require(workShareToken.transfer(msg.sender, totalCommission), "The transfer of commission tokens failed.");
     }
- 
+
+    function mintNFT(address recipient, string memory tokenURI)  
+    public onlyAdmin 
+    returns (uint256)
+    {
+        return masteryMilestones.mintNFT(recipient, tokenURI); 
+        
+    }
+
 } 
