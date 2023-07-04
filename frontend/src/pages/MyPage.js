@@ -120,25 +120,6 @@ export const MyPage = () => {
 				{owner && <OwnerSection />}
 				{manager && <ManagerSection />}
 
-				<div className="flex flex-col space-y-4">
-					<label class="font-bold text-lg text-white">Apply to Project</label>
-					<input
-						type="number"
-						onChange={(e) => setProjectNumber(e.target.value)}
-						placeholder="Project number"
-						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
-					></input>
-					<button
-						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
-						routerLink="/projects"
-						onClick={applyToProject}
-						disabled={loading}
-					>
-						{loading ? "Loading..." : "Apply"}
-					</button>
-
-					<div className="flex flex-span"></div>
-				</div>
 				{manager && <MyProjects manager={manager} />}
 				{developer && <MyProjects manager={manager} />}
 			</div>
