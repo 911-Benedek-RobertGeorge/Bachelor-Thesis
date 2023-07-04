@@ -4,11 +4,12 @@ import ProjectList from "../components/ProjectList";
 import { getContract } from "../utils/contractHelpers";
 
 export const Projects = () => {
-	function ProjectDto(id, reward, penalty, deadline, shortDescription, requirementsDocumentCID, nftCID) {
+	function ProjectDto(id, reward, penalty, deadline, state, shortDescription, requirementsDocumentCID, nftCID) {
 		this.id = id;
 		this.reward = reward;
 		this.penalty = penalty;
 		this.deadline = deadline;
+		this.state = state;
 		this.shortDescription = shortDescription;
 		this.requirementsDocumentCID = requirementsDocumentCID;
 		this.nftCID = nftCID;
@@ -29,18 +30,25 @@ export const Projects = () => {
 			const result = await contract.methods.getOpenProjects().call();
 
 			/// same them in the format we need
-			const formattedProjects = result.map(
-				(project) =>
-					new ProjectDto(
-						project.id,
-						project.reward,
-						project.penalty,
-						project.deadline,
-						project.shortDescription,
-						project.requirementsDocumentCID,
-						project.nftCID
-					)
-			);
+			const formattedProjects = result.reduce((acc, project) => {
+				if (project.state === "0") {
+					//OPEN
+
+					acc.push(
+						new ProjectDto(
+							project.id,
+							project.reward,
+							project.penalty,
+							project.deadline,
+							project.state,
+							project.shortDescription,
+							project.requirementsDocumentCID,
+							project.nftCID
+						)
+					);
+				}
+				return acc;
+			}, []);
 
 			setProjectList(formattedProjects);
 		} catch (e) {

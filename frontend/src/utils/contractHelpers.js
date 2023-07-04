@@ -1,6 +1,7 @@
 import Web3 from "web3";
 
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+console.log("PROJECT FORM CONTRACT  : " + contractAddress);
 const tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
 
 const { abi } = require("../contracts/WorkShare.json");

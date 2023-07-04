@@ -27,7 +27,7 @@ const Project = ({ project, showApplyButton }) => {
 		try {
 			const Contract = await getContract();
 			const account = await getAccount();
-			console.log("THE ACC : " + account);
+
 			await Contract.methods.applyForProject(project.id).send({ from: account });
 			setSuccess(true);
 			showMessage();
@@ -55,8 +55,32 @@ const Project = ({ project, showApplyButton }) => {
 							alt={project.nftCID}
 							className=" p-2 h-64 w-48 object-cover rounded-t-xl"
 						/>
+
 						<div className="mt-2 mr-2 p-2	w-[120px] h-60  ">
-							<label className="text-gray-400  text-bold ">Id </label>
+							<div className="flex flex-row">
+								{" "}
+								<label className="text-gray-400  text-bold ">Id </label>
+								{project.state === "0" && (
+									<div className="flex ml-auto">
+										<div className="h-3 w-3 bg-green-500 rounded-full" />
+									</div>
+								)}
+								{project.state === "1" && (
+									<div className="flex ml-auto">
+										<div className="h-3 w-3 bg-yellow-500 rounded-full" />
+									</div>
+								)}
+								{project.state === "3" && (
+									<div className="flex ml-auto">
+										<div className="h-3 w-3 bg-red-500 rounded-full" />
+									</div>
+								)}
+								{project.state === "2" && (
+									<div className="flex ml-auto">
+										<div className="h-3 w-3 bg-sky-500 rounded-full" />
+									</div>
+								)}
+							</div>
 
 							<div className="flex justify-center items-center p-2 w-28 rounded-lg  text-white bg-gradient-to-b from-purple-700 to-indigo-900">
 								<p className=" justify-center text-sm">{project.id}</p>

@@ -4,23 +4,36 @@ import { Header } from "../containers/Header";
 import ProjectList from "../components/ProjectList";
 
 export const MyProjects = ({ manager }) => {
-	function ProjectDto(id, nrOfApplicants, reward, penalty, deadline, shortDescription, requirementsDocumentCID, nftCID) {
+	function ProjectDto(
+		id,
+		nrOfApplicants,
+		reward,
+		penalty,
+		deadline,
+		manager,
+		shortDescription,
+		state,
+		requirementsDocumentCID,
+		nftCID,
+		acceptedDeveloper
+	) {
 		this.id = id;
 		this.nrOfApplicants = nrOfApplicants;
+
 		this.reward = reward;
 		this.penalty = penalty;
 		this.deadline = deadline;
+		this.manager = manager;
 		this.shortDescription = shortDescription;
+		this.state = state;
 		this.requirementsDocumentCID = requirementsDocumentCID;
 		this.nftCID = nftCID;
+		this.acceptedDeveloper = acceptedDeveloper;
 	}
 	const [projectList, setProjectList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState("");
-	const [contract, setContract] = useState();
-	const [account, setAccount] = useState();
-	const projects = [];
 
 	useEffect(() => {
 		getProjects();
@@ -31,26 +44,46 @@ export const MyProjects = ({ manager }) => {
 			const contract = await getContract();
 			const account = await getAccount();
 			var result;
-			console.log("MANAGER : " + manager);
-			if (manager) {
-				result = await contract.methods.getMyProjectsAdmin().call({ from: account });
-			} else {
-				result = await contract.methods.getMyProjectsDev().call({ from: account });
-			}
-			const formattedProjects = result.map(
-				(project) =>
-					new ProjectDto(
-						project.id,
-						project.nrOfApplicants,
-						project.reward,
-						project.penalty,
-						project.deadline,
-						project.shortDescription,
-						project.requirementsDocumentCID,
-						project.nftCID
-					)
-			);
 
+			result = await contract.methods.getOpenProjects().call({ from: account });
+			console.log(result);
+			const formattedProjects = result.reduce((acc, project) => {
+				if (manager && project.manager === account) {
+					acc.push(
+						new ProjectDto(
+							project.id,
+							project.nrOfApplicants,
+							project.reward,
+							project.penalty,
+							project.deadline,
+							project.manager,
+							project.shortDescription,
+							project.state,
+							project.requirementsDocumentCID,
+							project.nftCID,
+							project.acceptedDeveloper
+						)
+					);
+				} else if (!manager && project.acceptedDeveloper === account) {
+					acc.push(
+						new ProjectDto(
+							project.id,
+							project.nrOfApplicants,
+							project.reward,
+							project.penalty,
+							project.deadline,
+							project.manager,
+							project.shortDescription,
+							project.state,
+							project.requirementsDocumentCID,
+							project.nftCID,
+							project.acceptedDeveloper
+						)
+					);
+				}
+
+				return acc;
+			}, []);
 			setProjectList(formattedProjects);
 
 			setSuccess(true);

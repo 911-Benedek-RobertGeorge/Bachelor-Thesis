@@ -90,56 +90,58 @@ export const MyPage = () => {
 		setLoading(false);
 	};
 	return (
-		<div className=" flex flex-col bg-gradient-to-b from-color-bg to-footer-color   items-center space-y-8 ">
-			<Header />
-			{successTokenAction && <p className="text-green-400">Success!</p>}
-			<div className="flex ">
-				<h3 className="mr-8 text-white text-sm font-semibold rounded">{`WST balance: ${balance}`}</h3>
+		<div className="h-screen bg-gradient-to-b from-color-bg to-footer-color ">
+			<div className=" flex flex-col w-full bg-gradient-to-b from-color-bg to-footer-color   items-center space-y-8 ">
+				<Header />
+				{successTokenAction && <p className="text-green-400">Success!</p>}
+				<div className="flex ">
+					<h3 className="mr-8 text-white text-sm font-semibold rounded">{`WST balance: ${balance}`}</h3>
 
-				<input
-					type="number"
-					onChange={(e) => setAmount(e.target.value)}
-					placeholder="Amount"
-					class="border rounded-lg mr-4 py-2 px-3  bg-black border-color-logo placeholder-white-500 text-white"
-				></input>
-				<button
-					onClick={buyToken}
-					className="mr-2 w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-2 font-semibold"
-				>
-					Buy{" "}
-				</button>
+					<input
+						type="number"
+						onChange={(e) => setAmount(e.target.value)}
+						placeholder="Amount"
+						class="border rounded-lg mr-4 py-2 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+					></input>
+					<button
+						onClick={buyToken}
+						className="mr-2 w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-2 font-semibold"
+					>
+						Buy{" "}
+					</button>
 
-				<button
-					onClick={sellToken}
-					className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-2 font-semibold"
-				>
-					Sell
-				</button>
+					<button
+						onClick={sellToken}
+						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-2 font-semibold"
+					>
+						Sell
+					</button>
+				</div>
+				{owner && <OwnerSection />}
+				{manager && <ManagerSection />}
+
+				<div className="flex flex-col space-y-4">
+					<label class="font-bold text-lg text-white">Apply to Project</label>
+					<input
+						type="number"
+						onChange={(e) => setProjectNumber(e.target.value)}
+						placeholder="Project number"
+						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+					></input>
+					<button
+						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
+						routerLink="/projects"
+						onClick={applyToProject}
+						disabled={loading}
+					>
+						{loading ? "Loading..." : "Apply"}
+					</button>
+
+					<div className="flex flex-span"></div>
+				</div>
+				{manager && <MyProjects manager={manager} />}
+				{developer && <MyProjects manager={manager} />}
 			</div>
-			{owner && <OwnerSection />}
-			{manager && <ManagerSection />}
-
-			<div className="flex flex-col space-y-4">
-				<label class="font-bold text-lg text-white">Apply to Project</label>
-				<input
-					type="number"
-					onChange={(e) => setProjectNumber(e.target.value)}
-					placeholder="Project number"
-					class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
-				></input>
-				<button
-					className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
-					routerLink="/projects"
-					onClick={applyToProject}
-					disabled={loading}
-				>
-					{loading ? "Loading..." : "Apply"}
-				</button>
-
-				<div className="flex flex-span"></div>
-			</div>
-			{manager && <MyProjects manager={manager} />}
-			{developer && <MyProjects manager={manager} />}
 		</div>
 	);
 };

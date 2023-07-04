@@ -14,6 +14,9 @@ export const ManagerSection = () => {
 	const [projectNumber, setProjectNumber] = useState(-1);
 
 	const [applicantAddress, setApplicantAddress] = useState("");
+	const [receiverAddress, setReceiverAddress] = useState("");
+	const [nftURI, setNftURI] = useState("");
+
 	const [projectNumberFinalize, setprojectNumberFinalize] = useState(-1);
 	const [developerAddress, setDeveloperAddress] = useState("");
 	const [email, setEmail] = useState("");
@@ -61,7 +64,7 @@ export const ManagerSection = () => {
 			const tx = await contract.methods.finalizeProject(projectNumberFinalize).send({ from: account });
 
 			setTxHash(tx.hash);
-			await tx.wait();
+			//await tx.wait();
 			setSuccess(true);
 		} catch (error) {
 			setError(error);
@@ -110,6 +113,21 @@ export const ManagerSection = () => {
 			const theApplicantsList = await contract.methods.getAllApplicants(projectNumber).call({ from: account });
 
 			setApplicantsList(theApplicantsList);
+			setSuccess(true);
+		} catch (error) {
+			setError(error);
+			console.log(error);
+		}
+		setLoading(false);
+	};
+	const mintNFT = async () => {
+		setSuccess(false);
+		setError(false);
+		setLoading(true);
+		try {
+			const nftPinataURL = "https://gateway.pinata.cloud/ipfs/" + nftURI;
+			const nftID = await contract.methods.mintNFT(receiverAddress, nftPinataURL).send({ from: account });
+			console.log(nftID);
 			setSuccess(true);
 		} catch (error) {
 			setError(error);
@@ -188,24 +206,34 @@ export const ManagerSection = () => {
 					</button>
 				</div>
 
-				<div>
-					<Link to="project-form">
-						<button
-							type="button"
-							className=" h-12 w-32 text-color-logo border  border-indigo-600 hover:bg-black hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-						>
-							<span className="font-bold">Add project</span>
-							<svg aria-hidden="true" className="scale-50" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-								<path
-									fill-rule="evenodd"
-									d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								></path>
-							</svg>
-						</button>
-					</Link>
+				<div className="flex flex-col space-y-4">
+					<label class="font-bold text-lg text-white ">Mint NFT</label>
+
+					<input
+						type="text"
+						onChange={(e) => setReceiverAddress(e.target.value)}
+						placeholder="Address"
+						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+					></input>
+
+					<input
+						type="text"
+						onChange={(e) => setNftURI(e.target.value)}
+						placeholder="NFT Metadata URL"
+						class="border rounded-lg py-3 px-3  bg-black border-color-logo placeholder-white-500 text-white"
+					></input>
+
+					<button
+						className="w-1/2 mx-auto mt-auto flex justify-center  border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold"
+						routerLink="/projects"
+						onClick={mintNFT}
+						disabled={loading}
+					>
+						{loading ? "Loading..." : "Mint nft"}
+					</button>
 				</div>
 			</div>
+
 			<div className="flex mt-8">
 				{applicantsList && <ApplicantsList applicantsList={applicantsList} />}
 				<div className="flex flex-col space-y-4">
@@ -249,6 +277,21 @@ export const ManagerSection = () => {
 						</button>
 					</div>
 				</div>
+				<Link to="project-form" className="flex mt-16">
+					<button
+						type="button"
+						className=" h-12 w-32 text-color-logo border ml-16 border-indigo-600 hover:bg-black hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+					>
+						<span className="font-bold">Add project</span>
+						<svg aria-hidden="true" className="scale-50" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path
+								fill-rule="evenodd"
+								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							></path>
+						</svg>
+					</button>
+				</Link>
 			</div>
 		</div>
 	);
