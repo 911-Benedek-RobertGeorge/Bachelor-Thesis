@@ -1,31 +1,11 @@
 # WorkShare
 
+https://work-share.netlify.app/
  
+In the current business environment, companies and employees face the weighty burden of government taxes and contributions, ranging from 35\% to 47.25\% of the gross salary  in Romania \cite{anaf-contributii}, alongside the additional transfer costs imposed by banks. This dual challenge places a substantial financial strain on businesses. Another significant challenge is finding hardworking software developers and scalability, especially when limited to local talent pools.
 
-In the current business environment, companies and employees in Romania face
-the weighty burden of government taxes and contributions, ranging from 35% to
-47.25% of the gross salary , alongside the additional transfer costs imposed
-by banks. This dual challenge places a substantial financial strain on businesses.
-However, WorkShare offers a solution using the power of blockchain technology. By
-leveraging this innovative technology and Polygon network, WorkShare minimizes
-transaction fees to nearly zero, optimizes payment processes, and significantly re-
-duces tax and contributions obligations on earnings by up to 78% taking advantage
-of the 10% tax for earnings that come from cryptocurrencies   . This cost-
-effective alternative provides much-needed relief for companies, empowering them
-to allocate resources more efficiently and stimulate growth in the digital economy.
-Additionally, the application addresses scalability concerns faced by companies.
-By connecting companies with a pool of skilled developers, WorkShare ensures a
-consistent workflow and project availability, regardless of the company’s current
-project load.
-Furthermore, WorkShare addresses the challenge of finding hardworking soft-
-ware developers, especially when limited to local talent pools. By leveraging blockchain
-technology, developers from different countries can participate, eliminating high
-fees associated with international salary transfers and expanding the talent pool for
-companies.
-In conclusion, the WorkShare application provides an innovative solution to the
-challenges faced by companies and developers in project management and com-
-pensation. By leveraging blockchain technology, it addresses high fees and trans-
-fer costs, enhances scalability, and expands access to a global talent pool. Work-
-Share revolutionizes the way projects are executed, paving the way for increased
-efficiency, transparency, and collaboration in the digital economy.
+The application proposed in this thesis titled WorkShare, is a groundbreaking solution that leverages blockchain technology to address multiple challenges in project management and compensation. It offers a solution using the power of blockchain technology, smart contracts  and Polygon network . WorkShare minimizes transaction fees to nearly zero, optimizes payment processes, and significantly reduces tax and contributions obligations on earnings by up to 78\% taking advantage of the 10\% tax in Romania for earnings that come from cryptocurrencies \cite{anaf} and even by 100\% in countries like Belarus, where the earnings from cryptocurrencies are not taxed. WorkShare offers an economical alternative that brings significant relief to companies, empowering them to optimize resource allocation and drive growth in the digital economy. Furthermore, it provides additional incentives for developers and introduces a unique NFT proof system that validates their skills and project accomplishments. 
+
+Additionally, the application addresses scalability concerns faced by companies by connecting companies with a pool of skilled developers from around the world, WorkShare ensures a consistent workflow and project availability, regardless of the company's current project load.
  
+With WorkShare, companies can achieve greater efficiency in resource management, foster a thriving digital economy, and reward developers for their contributions through the innovative NFT proof mechanism.
