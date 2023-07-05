@@ -1,6 +1,9 @@
 # WorkShare
 
+
 https://work-share.netlify.app/
+Please note that to access the deployed version, you will need to have Metamask with the Mumbai network properly configured.
+
  
 In the current business environment, companies and employees face the weighty burden of government taxes and contributions, ranging from 35\% to 47.25\% of the gross salary  in Romania \cite{anaf-contributii}, alongside the additional transfer costs imposed by banks. This dual challenge places a substantial financial strain on businesses. Another significant challenge is finding hardworking software developers and scalability, especially when limited to local talent pools.
 
